@@ -1,8 +1,8 @@
 <template>
   <div id="list-users">
     <div class="header">
-      <h3>Danh sách người dùng</h3>
-      <router-link to="/create">
+      <h3>Danh sách {{data.name}}</h3>
+      <router-link to="create">
         <b-button variant="success" size="sm"
           >Tạo người dùng</b-button
         ></router-link
@@ -41,8 +41,8 @@
       </b-col>
       <b-col sm="12" md="12">
         <b-table
-          :items="items"
-          :fields="fields"
+          :items="data.items"
+          :fields="data.fields"
           :current-page="currentPage"
           :per-page="perPage"
           :filter="filter"
@@ -77,6 +77,12 @@
 
 <script>
 export default {
+  props: {
+    data: {
+      type: Array,
+      required: true
+    }
+  },
   data() {
     return {
       totalRows: 1,
@@ -85,257 +91,7 @@ export default {
       filter: null,
       filterOn: [],
       pageOptions: [5, 10, 15, 20, { value: 100, text: "Show all" }],
-      fields: [
-        {
-          // A column that needs custom formatting,
-          // calling formatter 'fullName' in this app
-          key: "name",
-          label: "Tên đầy đủ",
-          formatter: "fullName",
-        },
-        // A regular column
-        {
-          label: "Tên đăng nhập",
-          key: "userName",
-        },
-        {
-          label: "Ngày tạo",
-          key: "createdDate",
-        },
-        {
-          label: "Trạng thái",
-          key: "status",
-          formatter: (value, key, item) => {
-            if (item.status) {
-              return "Đang làm";
-            }
-            return "Nghỉ việc";
-          },
-        },
-        {
-          label: "Thao tác",
-          key: "action",
-        },
-      ],
-      items: [
-        {
-          name: { first: "John", last: "Doe" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "John", last: "Doe" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "John", last: "Doe" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "John", last: "Doe" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "John", last: "Doe" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "John", last: "Doe" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "John", last: "Doe" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-        {
-          name: { first: "Meo", last: "Cutee" },
-          userName: "dickerson",
-          createdDate: "12/14/2020, 3:06:55 PM",
-          status: false,
-          action: "Edit",
-        },
-      ],
+////////////////
     };
   },
   methods: {

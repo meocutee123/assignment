@@ -11,7 +11,7 @@
         </b-col>
         <b-col cols="12">
         <div class="content">
-          <router-view/>
+          <router-view :key="$route.path"/>
         </div>
         </b-col>
       </b-row>
@@ -22,8 +22,7 @@
 <script>
 import Nav from "@/components/Nav.vue";
 import User from "@/components/User.vue";
-
-export default {
+export default {  
   name: "home",
   components: { Nav, User},
 };

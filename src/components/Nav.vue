@@ -15,8 +15,8 @@
       </b-button>
       <b-collapse id="setting-list" accordion="my-accordion" role="tabpanel">
         <ul>
-         <router-link to="/"> <li>Users</li></router-link>
-          <router-link to="/products"><li>Products</li></router-link>
+         <router-link :to="{name: 'Home', params: {data: data}}"> <li>Users</li></router-link>
+          <router-link :to="{name: 'Product', params: {data: data2}}"><li>Products</li></router-link>
 
         </ul>
       </b-collapse>
@@ -27,11 +27,23 @@
     </div>
   </nav>
 </template>
+<script>
+import db from '@/store/db'
+import db2 from '@/store/db2'
+export default {
+  data(){
+    return{
+      data: db,
+      data2: db2
+    }
+  }
+}
+</script>
 <style lang="scss" scoped>
 button:focus {
   box-shadow: none;
 }
-a{
+a, a:hover{
     color: #fff;
     text-decoration: none;
   }

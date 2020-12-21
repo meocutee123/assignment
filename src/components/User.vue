@@ -5,13 +5,28 @@
         <b-avatar src="@/assets/person.png"></b-avatar> Settings
       </template>
       <template #avatar></template>
-      <b-dropdown-item><router-link to="/create">Hồ sơ</router-link></b-dropdown-item>
+      <b-dropdown-item
+        ><router-link
+          to="create"
+          >Hồ sơ</router-link
+        ></b-dropdown-item
+      >
       <b-dropdown-item>Thoát</b-dropdown-item>
     </b-dropdown>
   </div>
 </template>
+<script>
+export default {
+  data(){
+    return {
+
+    }
+  }
+};
+</script>
+
 <style lang="scss" scoped>
-  button:focus {
+button:focus {
   box-shadow: none;
 }
 .user {
@@ -21,9 +36,10 @@
   text-align: end;
   z-index: 5;
 
-  a{
+  a {
     color: black;
     text-decoration: none;
   }
+
 }
 </style>

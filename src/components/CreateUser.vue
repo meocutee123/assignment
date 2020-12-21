@@ -13,7 +13,7 @@
           >
             <b-form-input
               id="userName"
-              placeholder="Tạo tên đăng nhập"
+              placeholder="Nhập tên"
               v-model="userName"
               :state="state"
               trim
@@ -78,7 +78,10 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+
+  
+};
 </script>
 <style lang="scss" scope="this api replaced by slot-scope in 2.5.0+">
 form {
