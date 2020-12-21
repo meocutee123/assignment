@@ -86,7 +86,7 @@ export default {
 <style lang="scss" scope="this api replaced by slot-scope in 2.5.0+">
 form {
   padding: 20px;
-  margin: 10px;
+  margin: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   .btn{
       padding: 5px 40px

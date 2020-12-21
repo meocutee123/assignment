@@ -5,38 +5,24 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/users/:data",
+    path: "/users:data",
     name: "Home",
     component: () =>
-      import(/* webpackChunkName: "listUser" */ "../components/ListUser.vue"),
+      import(/* webpackChunkName: "listUser" */ "../components/Table.vue"),
     props: true,
-    children: [
-      {
-        path: "create",
-        name: "createUser",
-        component: () =>
-          import(
-            /* webpackChunkName: "create" */ "../components/CreateUser.vue"
-          ),
-      },
-    ],
   },
   {
-    path: "/products/:data",
+    path: "/products:data",
     name: "Product",
     component: () =>
-      import(/* webpackChunkName: "product" */ "../components/ListUser.vue"),
+      import(/* webpackChunkName: "product" */ "../components/Table.vue"),
     props: true,
-    children: [
-      {
-        path: "create",
-        name: "createProduct",
-        component: () =>
-          import(
-            /* webpackChunkName: "create" */ "../components/CreateUser.vue"
-          ),
-      },
-    ],
+  },
+  {
+    path: "/create",
+    name: "Create",
+    component: () =>
+      import(/* webpackChunkName: "create" */ "../components/CreateUser.vue"),
   },
   {
     path: "/:catchAll(.*)",

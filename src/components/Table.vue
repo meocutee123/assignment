@@ -4,7 +4,7 @@
       <h3>Danh sách {{data.name}}</h3>
       <router-link to="create">
         <b-button variant="success" size="sm"
-          >Tạo người dùng</b-button
+          >Tạo {{data.name}}</b-button
         ></router-link
       >
     </div>
@@ -72,6 +72,7 @@
         ></b-pagination
       ></b-col>
     </b-row>
+    <router-view/>
   </div>
 </template>
 
@@ -87,11 +88,10 @@ export default {
     return {
       totalRows: 1,
       currentPage: 1,
-      perPage: 5,
+      perPage: 20,
       filter: null,
       filterOn: [],
-      pageOptions: [5, 10, 15, 20, { value: 100, text: "Show all" }],
-////////////////
+      pageOptions: [20, 50, 100, { value: 1000, text: "Show all" }],
     };
   },
   methods: {

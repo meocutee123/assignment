@@ -15,8 +15,8 @@
       </b-button>
       <b-collapse id="setting-list" accordion="my-accordion" role="tabpanel">
         <ul>
-         <router-link :to="{name: 'Home', params: {data: data}}"> <li>Users</li></router-link>
-          <router-link :to="{name: 'Product', params: {data: data2}}"><li>Products</li></router-link>
+         <router-link :to="{name: 'Home', params: {data: users}}"> <li>Users</li></router-link>
+          <router-link :to="{name: 'Product', params: {data: products}}"><li>Products</li></router-link>
 
         </ul>
       </b-collapse>
@@ -28,13 +28,13 @@
   </nav>
 </template>
 <script>
-import db from '@/store/db'
-import db2 from '@/store/db2'
+import users from '@/store/users'
+import products from '@/store/products'
 export default {
   data(){
     return{
-      data: db,
-      data2: db2
+      users: users,
+      products: products
     }
   }
 }
