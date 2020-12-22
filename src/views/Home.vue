@@ -2,7 +2,7 @@
   <div id="home">
     <b-row>
       <b-col cols="3">
-        <Nav />
+        <Nav/>
       </b-col>
       <b-col>
         <b-row>
@@ -22,7 +22,12 @@
 <script>
 import Nav from "@/components/Nav.vue";
 import User from "@/components/User.vue";
-export default {  
+export default {
+  data(){
+    return{
+
+    }
+  },
   name: "home",
   components: { Nav, User},
 };

@@ -23,19 +23,14 @@ export default {
       label{
       font-weight: bold;
       color:  #42b983;
-    }
+    }a, a:hover{
+    color: #fff;
+    text-decoration: none;
+  }
 }
 
 #nav {
   padding: 30px;
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>

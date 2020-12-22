@@ -11,7 +11,8 @@
             <b-form-input
               id="userName"
               placeholder="Nhập tên"
-              v-model="newUser.userName"
+              v-model="test.userName"
+              disabled
             ></b-form-input>
           </b-form-group>
         </b-col>
@@ -22,7 +23,10 @@
             label="Tên nhân viên"
             label-for="input-1"
           >
-            <b-form-input placeholder="Nhập tên" v-model="newUser.name.first"></b-form-input> </b-form-group
+            <b-form-input
+              placeholder="Nhập tên"
+              v-model="test.name.first"
+            ></b-form-input> </b-form-group
         ></b-col>
         <b-col cols="6"
           ><b-form-group
@@ -33,20 +37,21 @@
             <b-form-input
               id="userName"
               placeholder="Nhập họ"
-              v-model="newUser.name.last"
+              v-model="test.name.last"
             ></b-form-input> </b-form-group
         ></b-col>
         <b-col cols="6">
-          <b-form-checkbox v-model="newUser.checked">
+          <b-form-checkbox v-model="test.checked">
             Trạng thái
           </b-form-checkbox>
         </b-col>
         <b-col cols="12" class="d-flex">
           <b-form-group class="mr-3 ml-auto">
             <router-link to="/">
-            <b-button block variant="success" @click="addUser"
-              >Submit</b-button></router-link>
-            
+              <b-button block variant="success"
+                >Cập nhật</b-button
+              ></router-link
+            >
           </b-form-group>
           <b-form-group>
             <router-link to="/"><b-button block variant="success">Cancel</b-button></router-link>
@@ -57,33 +62,28 @@
   </div>
 </template>
 <script>
-import { mapMutations } from "vuex";
+import users from "@/store/users.js";
 export default {
+  props: {
+    id: {
+      type: Number,
+      required: true
+    }
+  },
   data() {
-    return {
-      newUser: {
-        name: {first: '', last: ''},
-        userName: '',
-        createdDate: this.getFormattedDate(),
-        checked: "false", 
-      },
-    };
+    return {};
   },
   methods: {
-    ...mapMutations(["ADD_USER"]),
-    addUser: function() {
-      this.ADD_USER(this.newUser);
-    },
-    getFormattedDate() {
-    var date = new Date();
-    var str = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear() + ", " +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + `${+ date.getHours() > 12 ? " PM":" AM"}` ;
 
-    return str;
-}
+  },
+  computed: {
+    test() {
+      return users.items.find(user => user.id == this.id)
+    },
   },
 };
 </script>
-<style lang="scss" scope="this api replaced by slot-scope in 2.5.0+">
+<style lang="scss" scope>
 form {
   padding: 20px;
   margin: 20px;

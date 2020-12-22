@@ -5,14 +5,14 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/users:data",
+    path: "/",
     name: "Home",
     component: () =>
       import(/* webpackChunkName: "listUser" */ "../components/Table.vue"),
     props: true,
   },
   {
-    path: "/products:data",
+    path: "/:data",
     name: "Product",
     component: () =>
       import(/* webpackChunkName: "product" */ "../components/Table.vue"),
@@ -23,6 +23,21 @@ const routes = [
     name: "Create",
     component: () =>
       import(/* webpackChunkName: "create" */ "../components/CreateUser.vue"),
+  },
+  {
+    path: "/:id/edit",
+    name: "Edit",
+    component: () =>
+      import(/* webpackChunkName: "create" */ "../components/EditUser.vue"),
+      props: true
+  },
+  {
+    path: "/createProduct",
+    name: "CreateProduct",
+    component: () =>
+      import(
+        /* webpackChunkName: "createProduct" */ "../components/CreateProduct.vue"
+      ),
   },
   {
     path: "/:catchAll(.*)",

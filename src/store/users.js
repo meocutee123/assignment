@@ -1,5 +1,5 @@
 export default{
-  name: 'người dùng',
+  name: 'user',
     fields: [
         {
           // A column that needs custom formatting,
@@ -29,100 +29,113 @@ export default{
         },
         {
           label: "Thao tác",
-          key: "action",
+          key: "id",
         },
       ],
       items: [
         {
+          id: 1,
           name: { first: "Lalisa", last: "Manoban" },
           userName: "lalalalisa",
           createdDate: "12/21/2020, 00:00:00 AM",
-          status: false,
-          action: "Edit",
+          status: true,
+
         },
         {
+          id: 2,
           name: { first: "Jennie", last: "Kim" },
           userName: "jennirubyjane",
           createdDate: "12/21/2020, 00:00:00 AM",
           status: false,
-          action: "Edit",
+
         },
         {
+          id: 3,
           name: { first: "Park", last: "Chaeyoung" },
           userName: "rosanepark",
           createdDate: "12/21/2020, 00:00:00 AM",
           status: false,
-          action: "Edit",
+
         },
         {
+          id: 4,
           name: { first: "Kim", last: "Jisoo" },
           userName: "jisooturtlerabitkim",
           createdDate: "12/21/2020, 00:00:00 AM",
           status: false,
-          action: "Edit",
+
         },
         {
+          id: 5,
           name: { first: "Im", last: "Nayeon" },
           userName: "CEOLim",
           createdDate: "12/21/2020, 00:00:00 AM",
           status: false,
-          action: "Edit",
+
         },
         {
+          id: 6,
           name: { first: "Minatozaki", last: "Sana" },
           userName: "sanashyshyshy",
           createdDate: "12/21/2020, 00:00:00 AM",
           status: false,
-          action: "Edit",
+
         },
         {
+          id: 7,
           name: { first: "Chou", last: "Tzuyu" },
           userName: "beautyqueen",
           createdDate: "12/21/2020, 00:00:00 AM",
           status: false,
-          action: "Edit",
+
         },
         {
+          id: 8,
           name: { first: "Hirai", last: "Momo" },
           userName: "dancingmachine",
           createdDate: "12/21/2020, 00:00:00 AM",
           status: false,
-          action: "Edit",
+
         },
         {
+          id: 9,
           name: { first: "Myoui", last: "Mina" },
           userName: "penguin",
           createdDate: "12/21/2020, 00:00:00 AM",
           status: false,
-          action: "Edit",
+
         },
         {
+          id: 10,
           name: { first: "Joo", last: "Jeongyeon" },
           userName: "shorthairgirlcrush",
           createdDate: "12/21/2020, 00:00:00 AM",
           status: false,
-          action: "Edit",
+
         },
         {
+          id: 11,
           name: { first: "Park", last: "Jihyo" },
           userName: "goddess",
           createdDate: "12/21/2020, 00:00:00 AM",
           status: false,
-          action: "Edit",
+
         },
         {
+          id: 12,
           name: { first: "Kim", last: "Dahyun" },
           userName: "tofu",
           createdDate: "12/21/2020, 00:00:00 AM",
           status: false,
-          action: "Edit",
+
         },
         {
+          id: 13,
           name: { first: "Son", last: "Chaeyoung" },
           userName: "strawbery",
           createdDate: "12/21/2020, 00:00:00 AM",
           status: false,
-          action: "Edit",
+
         },
         
       ]

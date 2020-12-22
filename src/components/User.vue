@@ -7,11 +7,12 @@
       <template #avatar></template>
       <b-dropdown-item
         ><router-link
-          to="create"
+          to="{createProduct}"
           >Hồ sơ</router-link
         ></b-dropdown-item
       >
-      <b-dropdown-item>Thoát</b-dropdown-item>
+      <b-dropdown-item><router-link to="/">Thoát </router-link></b-dropdown-item>
+     
     </b-dropdown>
   </div>
 </template>
@@ -31,13 +32,13 @@ button:focus {
 }
 .user {
   margin: 0 0 10px 10px;
-  padding: 5px 0;
+  padding: 5px 0; 
   background-color: white;
   text-align: end;
   z-index: 5;
 
   a {
-    color: black;
+    color: black !important;
     text-decoration: none;
   }
 

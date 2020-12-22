@@ -15,8 +15,8 @@
       </b-button>
       <b-collapse id="setting-list" accordion="my-accordion" role="tabpanel">
         <ul>
-         <router-link :to="{name: 'Home', params: {data: users}}"> <li>Users</li></router-link>
-          <router-link :to="{name: 'Product', params: {data: products}}"><li>Products</li></router-link>
+         <router-link to="/"> <li>Users</li></router-link>
+          <router-link :to="{name: 'Product', params: {data: 'products'}}"><li>Products</li></router-link>
 
         </ul>
       </b-collapse>
@@ -28,25 +28,21 @@
   </nav>
 </template>
 <script>
-import users from '@/store/users'
-import products from '@/store/products'
+// import {mapState} from 'vuex'
 export default {
   data(){
     return{
-      users: users,
-      products: products
     }
-  }
+  },
+  // computed: {
+  //   ...mapState(['users', 'products'])
+  // }
 }
 </script>
 <style lang="scss" scoped>
 button:focus {
   box-shadow: none;
 }
-a, a:hover{
-    color: #fff;
-    text-decoration: none;
-  }
 nav {
   width: 25vw;
   height: 100vh;
