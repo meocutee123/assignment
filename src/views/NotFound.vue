@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container text-center">
     <h1>404 page not found</h1>
     <p>
       Opps, we coundn't find that page. Try going

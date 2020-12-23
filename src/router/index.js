@@ -9,13 +9,6 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "listUser" */ "../views/Home.vue"),
     props: true,
-    // beforeEnter: (to, from, next) => {
-    //   if (this.$store.state.authenticated == false) {
-    //     next("/login");
-    //   } else {
-    //     next();
-    //   }
-    // },
     children: [
       {
         path: "",
@@ -72,12 +65,21 @@ const routes = [
   {
     path: "/login",
     name: "Login",
+    meta: { layout: "blank" },
     component: () =>
       import(/* webpackChunkName: "login" */ "@/views/Login.vue"),
   },
   {
+    path: "/test",
+    name: "Test",
+    meta: { layout: "blank" },
+    component: () => import(/* webpackChunkName: "test" */ "@/views/Test.vue"),
+    props: true,
+  },
+  {
     path: "/:catchAll(.*)",
     name: "notFound",
+    meta: { layout: "blank" },
     component: () =>
       import(/* webpackChunkName: "notFound" */ "../views/NotFound"),
   },

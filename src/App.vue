@@ -1,19 +1,23 @@
 <template>
   <div id="app">
-    <!-- <router-view :key="$route.path"/> -->
-    <test/>
+    <component :is="layout">
+      <router-view />
+    </component>
   </div>
 </template>
 <script>
-import Test from './views/Test.vue'
+const defaultLayout = 'default'
 export default {
-  components: {
-    Test
+  components: {},
+  computed:{
+    layout(){
+      return (this.$route.meta.layout || defaultLayout) + '-layout'
+    }
   }
-}
+};
 </script>
 
-Test<style lang="scss">
+<style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -23,11 +27,12 @@ Test<style lang="scss">
   padding: 0;
   margin: 0;
   overflow: hidden;
-  text-align: center;
-      label{
-      font-weight: bold;
-      color:  #42b983;
-    }a, a:hover{
+  label {
+    font-weight: bold;
+    color: #42b983;
+  }
+  a,
+  a:hover {
     color: #fff;
     text-decoration: none;
   }
@@ -35,6 +40,5 @@ Test<style lang="scss">
 
 #nav {
   padding: 30px;
-
 }
 </style>

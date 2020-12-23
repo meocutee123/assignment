@@ -1,50 +1,140 @@
 <template>
-  <div>
-    <div v-for="(field, key) in config" :key="key">
-        <label>{{field.label}}</label>
-        <component :is="field.type"
-        :name="field.name"
-        :params="field.params"
-        @input="updateField(field.name, $event)">
+  <div id="list-users">
+    <div class="header">
+      <h3>
+        Danh sách {{this.$route.params.title}}
+      </h3>
+      <router-link :to="{ name: 'CreateProduct' }">
+        <b-button variant="success" size="sm"
+          >Tạo {{this.$route.params.title}}</b-button
+        ></router-link
+      >
+    </div>
+    <b-row class="mt-3">
+      <b-col sm="6" md="6">
+        <b-form-group class="mb-0">
+          <b-form-select
+            v-model="perPage"
+            :options="pageOptions"
+            size="sm"
+            class="w-auto"
+          ></b-form-select>
+        </b-form-group>
+      </b-col>
 
-        </component>
-    </div>
-    <div>
-        <button type="submit" :disabled="disable">Submit</button>
-    </div>
-    {{formValues}}
+      <b-col sm="6" md="6">
+        <b-form-group class="w-50 ml-auto">
+          <b-input-group size="sm">
+            <b-form-input
+              id="filter-input"
+              v-model="filter"
+              type="search"
+              placeholder="Tìm kiếm"
+            ></b-form-input>
+            <b-button
+              size="sm"
+              variant="success"
+              :disabled="!filter"
+              @click="filter = ''"
+              >Xóa</b-button
+            >
+          </b-input-group>
+        </b-form-group>
+      </b-col>
+      <b-col sm="12" md="12">
+        <b-table
+          :items="this.$route.params.data.items"
+          :fields="this.$route.params.data.fields"
+          :current-page="currentPage"
+          :per-page="perPage"
+          :filter="filter"
+          :filter-included-fields="filterOn"
+          @filtered="onFiltered"
+        >
+          <template #cell(id)="data">
+            <!-- `data.value` is the value after formatted by the Formatter -->
+            <router-link
+              :to="{ name: 'Edit', params: { id: data.value } }"
+              class="ml-3"
+            >
+              <i
+                class="fas fa-edit"
+                style="font-weight: bold; color: #42b983;"
+              ></i>
+            </router-link>
+          </template>
+        </b-table>
+      </b-col>
+      <b-col sm="12" md="12">
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="totalRows"
+          :per-page="perPage"
+          align="fill"
+          size="sm"
+          class="my-0 w-25 ml-auto"
+        ></b-pagination
+      ></b-col>
+    </b-row>
+    <router-view />
   </div>
 </template>
+
 <script>
-import Vue from "vue";
-import Input from '@/FormElement/Input'
-import CheckBox from '@/FormElement/CheckBox'
-import Radio from '@/FormElement/Radio'
+import { mapState } from "vuex";
 export default {
-  props: ["config"],
+  // props:{
+  //   title: {
+  //     type: String,
+  //     required: true,
+  //     default: 'YOU MUST PUT THE TITLE HERE!!'
+  //   },
+  //   data: {
+  //     type: Array, 
+  //     required: true
+  //   }
+  // },
+  computed: {
+    ...mapState(["users"]),
+  },
   data() {
     return {
-      formValues: {},
+      totalRows: 1,
+      currentPage: 1,
+      perPage: 20,
+      filter: null,
+      filterOn: [],
+      pageOptions: [20, 50, 100, { value: 1000, text: "Show all" }],
     };
   },
-  computed:{
-      disable() {
-          return true
-      }
+  methods: {
+    fullName(value) {
+      return `${value.first} ${value.last}`;
+    },
+    onFiltered(filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
+    },
   },
-  created() {
-    this.config.map((f) => {
-      Vue.set(this.formValues, f.name, null);
-    });
+  mounted() {
+    // Set the initial number of items
+    this.totalRows = this.users.items.length;
   },
-  methods:{
-      updateField(field, value){
-          this.formValues[field] = value
-      }
-  },
-  components:{
-      Input, Radio, CheckBox
-  }
 };
 </script>
-<style lang=""></style>
+
+<style lang="scss" scope>
+#list-users {
+  background-color: white;
+  padding: 10px;
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
+  .page-item.active .page-link {
+    background-color: #42b983 !important;
+    border-color: #42b983 !important;
+  }
+}
+</style>

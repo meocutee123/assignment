@@ -17,6 +17,7 @@
         <ul>
          <router-link to="/"> <li>Users</li></router-link>
           <router-link :to="{name: 'Product'}"><li>Products</li></router-link>
+          <router-link :to="{name: 'Test', params: {title: 'người dùng', data: products}}"><li>Test</li></router-link>
 
         </ul>
       </b-collapse>
@@ -28,15 +29,15 @@
   </nav>
 </template>
 <script>
-// import {mapState} from 'vuex'
+import {mapState} from 'vuex'
 export default {
   data(){
     return{
     }
   },
-  // computed: {
-  //   ...mapState(['users', 'products'])
-  // }
+  computed: {
+    ...mapState(['products'])
+  }
 }
 </script>
 <style lang="scss" scoped>

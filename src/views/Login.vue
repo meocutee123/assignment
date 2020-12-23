@@ -41,10 +41,9 @@ export default {
   },
   methods: {
     login (){
-      if(this.input.userName == 'admin' && this.input.password == '123'){
-        this.$store.commit('AUTH', true);
-        this.$router.replace("/login");
-      }
+      // if(this.input.userName == 'admin' && this.input.password == '123'){
+        
+      // }
     }
   }
 };

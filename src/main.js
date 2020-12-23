@@ -5,6 +5,12 @@ import store from './store'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+import Default from './layouts/Default'
+import Blank from './layouts/Blank'
+
+Vue.component('default-layout', Default)
+Vue.component('blank-layout', Blank)
 // Install BootstrapVue
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
