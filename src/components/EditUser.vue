@@ -11,7 +11,7 @@
             <b-form-input
               id="userName"
               placeholder="Nhập tên"
-              v-model="test.userName"
+              v-model="userDetail.userName"
               disabled
             ></b-form-input>
           </b-form-group>
@@ -25,7 +25,7 @@
           >
             <b-form-input
               placeholder="Nhập tên"
-              v-model="test.name.first"
+              v-model="userDetail.name.first"
             ></b-form-input> </b-form-group
         ></b-col>
         <b-col cols="6"
@@ -37,11 +37,11 @@
             <b-form-input
               id="userName"
               placeholder="Nhập họ"
-              v-model="test.name.last"
+              v-model="userDetail.name.last"
             ></b-form-input> </b-form-group
         ></b-col>
         <b-col cols="6">
-          <b-form-checkbox v-model="test.checked">
+          <b-form-checkbox v-model="userDetail.status">
             Trạng thái
           </b-form-checkbox>
         </b-col>
@@ -62,25 +62,19 @@
   </div>
 </template>
 <script>
-import users from "@/store/users.js";
+import { mapMutations, mapState } from 'vuex';
 export default {
-  props: {
-    id: {
-      type: Number,
-      required: true
-    }
-  },
+  props: ['id'],
   data() {
     return {};
   },
   methods: {
+    ...mapMutations(['EDIT_USER'])
 
   },
   computed: {
-    test() {
-      return users.items.find(user => user.id == this.id)
-    },
-  },
+    ...mapState(['userDetail']),
+  }
 };
 </script>
 <style lang="scss" scope>

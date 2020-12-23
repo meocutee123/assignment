@@ -6,16 +6,23 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "Home",
     component: () =>
       import(/* webpackChunkName: "listUser" */ "../views/Home.vue"),
     props: true,
+    // beforeEnter: (to, from, next) => {
+    //   if (this.$store.state.authenticated == false) {
+    //     next("/login");
+    //   } else {
+    //     next();
+    //   }
+    // },
     children: [
       {
         path: "",
-        name: "Product",
         component: () =>
-          import(/* webpackChunkName: "product" */ "../components/Table.vue"),
+          import(
+            /* webpackChunkName: "product" */ "../components/UserTable.vue"
+          ),
         props: true,
       },
       {
@@ -34,12 +41,30 @@ const routes = [
         props: true,
       },
       {
+        path: "/product",
+        name: "Product",
+        component: () =>
+          import(
+            /* webpackChunkName: "product" */ "../components/ProductTable.vue"
+          ),
+        props: true,
+      },
+      {
         path: "product/createProduct",
         name: "CreateProduct",
         component: () =>
           import(
             /* webpackChunkName: "createProduct" */ "../components/CreateProduct.vue"
           ),
+      },
+      {
+        path: "product/:id/edit",
+        name: "EditProduct",
+        component: () =>
+          import(
+            /* webpackChunkName: "EditProduct" */ "../components/EditProduct.vue"
+          ),
+        props: true,
       },
     ],
   },

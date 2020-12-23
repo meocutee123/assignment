@@ -2,18 +2,11 @@
   <div id="list-users">
     <div class="header">
       <h3>
-        Danh sách
-        <span v-if="data === 'products'"> sản phẩm</span>
-        <span v-else> người dùng</span>
+        Danh sách người dùng
       </h3>
-      <router-link v-if="data != 'products'" :to="{ name: 'Create' }">
+      <router-link :to="{ name: 'CreateProduct' }">
         <b-button variant="success" size="sm"
           >Tạo người dùng</b-button
-        ></router-link
-      >
-      <router-link v-else :to="{ name: 'CreateProduct' }">
-        <b-button variant="success" size="sm"
-          >Tạo sản phẩm</b-button
         ></router-link
       >
     </div>
@@ -50,31 +43,6 @@
       </b-col>
       <b-col sm="12" md="12">
         <b-table
-          v-if="data === 'products'"
-          :items="products.items"
-          :fields="products.fields"
-          :current-page="currentPage"
-          :per-page="perPage"
-          :filter="filter"
-          :filter-included-fields="filterOn"
-          @filtered="onFiltered"
-        >
-          <template #cell(action)="data">
-            <!-- `data.value` is the value after formatted by the Formatter -->
-            <router-link
-              :to="{ name: 'Edit', params: { id: data.value } }"
-              class="ml-3"
-            >
-              <i
-                class="fas fa-edit"
-                style="font-weight: bold; color: #42b983;"
-              ></i>
-            </router-link>
-          </template>
-        </b-table>
-
-        <b-table
-          v-else
           :items="users.items"
           :fields="users.fields"
           :current-page="currentPage"
@@ -115,9 +83,8 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  props: ["data"],
   computed: {
-    ...mapState(["users", "products"]),
+    ...mapState(["users"]),
   },
   data() {
     return {
@@ -154,9 +121,9 @@ export default {
     display: flex;
     justify-content: space-between;
   }
-.page-item.active .page-link {  
-    background-color: #42b983 !important;  
-    border-color: #42b983 !important;  
-}
+  .page-item.active .page-link {
+    background-color: #42b983 !important;
+    border-color: #42b983 !important;
+  }
 }
 </style>

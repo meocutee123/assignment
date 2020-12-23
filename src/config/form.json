@@ -1,0 +1,51 @@
+[
+    {
+        "type" : "input",
+        "label": "First name",
+        "name": "firstName",
+        "vadiation": "required"
+    },
+    {
+        "type" : "input",
+        "label": "Last name",
+        "name": "lastName",
+        "vadiation": "required"
+    },
+    {
+        "type" : "input",
+        "label": "User name",
+        "name": "userName",
+        "vadiation": "required"
+    },
+    {
+        "type" : "input",
+        "label": "Email",
+        "name": "mail",
+        "vadiation": "required|email"
+    },
+    {
+        "type" : "CheckBox",
+        "label": "Do you like VueJS",
+        "name": "likeVue",
+        "vadiation": "required"
+    },
+    {
+        "type" : "CheckBox",
+        "label": "Do you like VueJS",
+        "name": "likeVue",
+        "vadiation": "required"
+    },
+    {
+        "type" : "CheckBox",
+        "label": "Check you",
+        "name": "likeVue",
+        "vadiation": "required"
+    },
+    {
+        "type" : "CheckBox",
+        "label": "Check me",
+        "name": "likeVue",
+        "vadiation": "required"
+    }
+
+]

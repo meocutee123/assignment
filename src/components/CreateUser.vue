@@ -22,7 +22,10 @@
             label="Tên nhân viên"
             label-for="input-1"
           >
-            <b-form-input placeholder="Nhập tên" v-model="newUser.name.first"></b-form-input> </b-form-group
+            <b-form-input
+              placeholder="Nhập tên"
+              v-model="newUser.name.first"
+            ></b-form-input> </b-form-group
         ></b-col>
         <b-col cols="6"
           ><b-form-group
@@ -37,19 +40,22 @@
             ></b-form-input> </b-form-group
         ></b-col>
         <b-col cols="6">
-          <b-form-checkbox v-model="newUser.checked">
+          <b-form-checkbox v-model="newUser.status">
             Trạng thái
           </b-form-checkbox>
         </b-col>
         <b-col cols="12" class="d-flex">
           <b-form-group class="mr-3 ml-auto">
             <router-link to="/">
-            <b-button block variant="success" @click="addUser"
-              >Submit</b-button></router-link>
-            
+              <b-button block variant="success" @click="addUser"
+                >Submit</b-button
+              ></router-link
+            >
           </b-form-group>
           <b-form-group>
-            <router-link to="/"><b-button block variant="success">Cancel</b-button></router-link>
+            <router-link to="/"
+              ><b-button block variant="success">Cancel</b-button></router-link
+            >
           </b-form-group>
         </b-col>
       </b-row>
@@ -62,10 +68,11 @@ export default {
   data() {
     return {
       newUser: {
-        name: {first: '', last: ''},
-        userName: '',
+        id: this.$store.state.users.items.length + 1,
+        name: { first: "", last: "" },
+        userName: "",
         createdDate: this.getFormattedDate(),
-        checked: "false", 
+        status: false,
       },
     };
   },
@@ -75,11 +82,24 @@ export default {
       this.ADD_USER(this.newUser);
     },
     getFormattedDate() {
-    var date = new Date();
-    var str = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear() + ", " +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + `${+ date.getHours() > 12 ? " PM":" AM"}` ;
+      var date = new Date();
+      var str =
+        date.getMonth() +
+        1 +
+        "/" +
+        date.getDate() +
+        "/" +
+        date.getFullYear() +
+        ", " +
+        date.getHours() +
+        ":" +
+        date.getMinutes() +
+        ":" +
+        date.getSeconds() +
+        `${+date.getHours() > 12 ? " PM" : " AM"}`;
 
-    return str;
-}
+      return str;
+    },
   },
 };
 </script>

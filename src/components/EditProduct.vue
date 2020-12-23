@@ -10,8 +10,9 @@
           >
             <b-form-input
               id="userName"
+              disabled
               placeholder="Nhập tên sản phẩm"
-              v-model="newProduct.name"
+              v-model="test.name"
             ></b-form-input>
           </b-form-group>
         </b-col>
@@ -24,7 +25,7 @@
             <b-form-input
               id="userName"
               placeholder="Nhập giá sản phẩm"
-              v-model="newProduct.price"
+              v-model="test.price"
             ></b-form-input> </b-form-group
         ></b-col>
 
@@ -32,23 +33,21 @@
           <b-form-checkbox
             id="checkbox-1"
             name="checkbox-1"
-            v-model="newProduct.status"
+            v-model="test.status"
           >
             Trạng thái
           </b-form-checkbox>
         </b-col>
         <b-col cols="12" class="d-flex">
           <b-form-group class="mr-3 ml-auto">
-            <router-link :to="{ name: 'Product', params: { data: 'products' } }"
-              ><b-button block variant="success" @click="addProduct"
+            <router-link :to="{ name: 'Product' }"
+              ><b-button block variant="success" @click="editProduct"
                 >Submit</b-button
               ></router-link
             >
           </b-form-group>
           <b-form-group>
-            <router-link
-              :to="{ name: 'Product', params: { data: 'products' } }"
-            >
+            <router-link :to="{ name: 'Product' }">
               <b-button block variant="success">Cancel</b-button></router-link
             >
           </b-form-group>
@@ -58,44 +57,25 @@
   </div>
 </template>
 <script>
-import { mapMutations } from "vuex";
+import products from "@/store/products.js";
+import { mapMutations } from 'vuex';
 export default {
+  props: ["id"],
   data() {
     return {
-      newProduct: {
-        id: this.$store.state.products.items.length + 1,
-        name: "",
-        createdDate: this.getFormattedDate(),
-        updatedDate: this.getFormattedDate(),
-        price: "",
-        status: false,
-      },
     };
   },
   methods: {
-    ...mapMutations(["ADD_PRODUCT", "FORMATED_DATE"]),
-    addProduct: function() {
-      this.ADD_PRODUCT(this.newProduct);
+    ...mapMutations(['EDIT_PRODUCT']),
+    editProduct() {
+     
+    }
+  },
+  computed: {
+    test() {
+      return products.items.find((product) => product.id == this.id);
     },
-    getFormattedDate() {
-      var date = new Date();
-      var str =
-        date.getMonth() +
-        1 +
-        "/" +
-        date.getDate() +
-        "/" +
-        date.getFullYear() +
-        ", " +
-        date.getHours() +
-        ":" +
-        date.getMinutes() +
-        ":" +
-        date.getSeconds() +
-        `${+date.getHours() > 12 ? " PM" : " AM"}`;
-
-      return str;
-    },
+  
   },
 };
 </script>

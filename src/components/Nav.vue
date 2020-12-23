@@ -16,7 +16,7 @@
       <b-collapse id="setting-list" accordion="my-accordion" role="tabpanel">
         <ul>
          <router-link to="/"> <li>Users</li></router-link>
-          <router-link :to="{name: 'Product', params: {data: 'products'}}"><li>Products</li></router-link>
+          <router-link :to="{name: 'Product'}"><li>Products</li></router-link>
 
         </ul>
       </b-collapse>
