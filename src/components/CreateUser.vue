@@ -1,6 +1,6 @@
 <template>
   <div id="create-user">
-    <form action="">
+    <form @submit.prevent="addUser">
       <b-row>
         <b-col cols="6">
           <b-form-group
@@ -85,15 +85,13 @@
         </b-col>
         <b-col cols="12" class="d-flex">
           <b-form-group class="mr-3 ml-auto">
-            <router-link to="/">
-              <b-button block variant="success" @click="addUser"
+              <b-button type="submit" block variant="success"
                 >Submit</b-button
-              ></router-link
             >
           </b-form-group>
           <b-form-group>
             <router-link to="/"
-              ><b-button block variant="success">Cancel</b-button></router-link
+              ><b-button  block variant="success">Cancel</b-button></router-link
             >
           </b-form-group>
         </b-col>
@@ -105,12 +103,6 @@
 import { mapMutations } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
 export default {
-  props: {
-    id: {
-      type: Number,
-      required: true
-    }
-  },
   data() {
     return {
       newUser: {
@@ -126,7 +118,11 @@ export default {
   methods: {
     ...mapMutations(["ADD_USER"]),
     addUser: function() {
-      this.ADD_USER(this.newUser);
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        this.ADD_USER(this.newUser);
+        this.$router.replace("/")
+      }
     },
     getFormattedDate() {
       var date = new Date();
@@ -153,9 +149,10 @@ export default {
       name: {
         first: {
           required,
-        }, last:{
-          required
-        }
+        },
+        last: {
+          required,
+        },
       },
       userName: {
         required,

@@ -17,8 +17,6 @@
         <ul>
          <router-link to="/"> <li>Users</li></router-link>
           <router-link :to="{name: 'Product'}"><li>Products</li></router-link>
-          <router-link :to="{name: 'Test', params: {title: 'người dùng', data: products}}"><li>Test</li></router-link>
-
         </ul>
       </b-collapse>
       <b-button block variant="none" class="text-left">

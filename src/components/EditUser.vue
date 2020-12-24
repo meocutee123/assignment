@@ -1,6 +1,5 @@
 <template>
   <div id="create-user">
-  {{ currenUser }}
     <form action="">
       <b-row>
         <b-col cols="6">

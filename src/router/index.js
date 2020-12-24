@@ -17,7 +17,7 @@ const routes = [
         path: "",
         component: () =>
           import(
-            /* webpackChunkName: "product" */ "../components/UserTable.vue"
+            /* webpackChunkName: "table" */ "../components/UserList.vue"
           ),
         props: true,
       },
@@ -41,7 +41,7 @@ const routes = [
         name: "Product",
         component: () =>
           import(
-            /* webpackChunkName: "product" */ "../components/ProductTable.vue"
+            /* webpackChunkName: "product" */ "../components/ProductList.vue"
           ),
         props: true,
       },
@@ -71,13 +71,6 @@ const routes = [
     meta: { layout: "blank" },
     component: () =>
       import(/* webpackChunkName: "login" */ "@/views/Login.vue"),
-  },
-  {
-    path: "/test",
-    name: "Test",
-    meta: { layout: "blank" },
-    component: () => import(/* webpackChunkName: "test" */ "@/views/Test.vue"),
-    props: true,
   },
   {
     path: "/:catchAll(.*)",

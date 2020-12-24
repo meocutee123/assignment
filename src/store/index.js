@@ -13,6 +13,9 @@ export default new Vuex.Store({
   getters: {
     getAllProduct: state => {
       return state.products
+    },
+    getAllUser: state => {
+      return state.users
     }
   },
   mutations: {

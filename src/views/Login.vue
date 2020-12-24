@@ -38,8 +38,8 @@
             class="invalid-feedback text-danger"
             v-if="!$v.password.required"
           >
-            Last name cannot be blank! </span
-          >
+            Last name cannot be blank!
+          </span>
         </b-form-group>
         <b-form-group>
           <b-button type="submit" block variant="success">Đăng nhập</b-button>
@@ -63,9 +63,12 @@ export default {
       this.$v.$touch();
 
       if (this.$v.$invalid) {
-        sessionStorage.setItem("auth", true);
-        this.$router.replace("/");
-        console.log("valid");
+        if (this.userName == "admin") {
+          sessionStorage.setItem("auth", true);
+          this.$router.replace("/");
+        }else{
+          console.log("Username or password is incorrect");
+        }
       }
     },
   },

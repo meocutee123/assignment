@@ -1,12 +1,10 @@
 <template>
-  <div id="list-products">
+  <div id="list-users">
     <div class="header">
-      <h3>
-        Danh sách sản phẩm
-      </h3>
-      <router-link :to="{ name: 'CreateProduct' }">
+      <h3>Danh sách {{ title }}</h3>
+      <router-link :to="{ name: linkTo }">
         <b-button variant="success" size="sm"
-          >Tạo sản phẩm</b-button
+          >Tạo {{ title }}</b-button
         ></router-link
       >
     </div>
@@ -43,8 +41,8 @@
       </b-col>
       <b-col sm="12" md="12">
         <b-table
-          :items="getAllProduct.items"
-          :fields="getAllProduct.fields"
+          :items="items"
+          :fields="fields"
           :current-page="currentPage"
           :per-page="perPage"
           :filter="filter"
@@ -53,15 +51,12 @@
         >
           <template #cell(id)="data">
             <!-- `data.value` is the value after formatted by the Formatter -->
-            <router-link
-              :to="{ name: 'EditProduct', params: { id: data.value } }"
-              class="ml-3"
-            >
+            <router-link :to="{ name: 'Edit', params: { id: data.value } }">
               <i
                 class="fas fa-edit"
                 style="font-weight: bold; color: #42b983;"
-              ></i>
-            </router-link>
+              ></i
+            ></router-link>
           </template>
         </b-table>
       </b-col>
@@ -81,10 +76,12 @@
 </template>
 
 <script>
-import { mapGetters} from "vuex";
 export default {
-  computed: {
-    ...mapGetters(["getAllProduct"]),
+  props: {
+    title: { type: String, required: true },
+    linkTo: { type: String, required: true },
+    items: { type: Array, required: true },
+    fields: { type: Array, required: true },
   },
   data() {
     return {
@@ -97,21 +94,22 @@ export default {
     };
   },
   methods: {
+    fullName(value) {
+      return `${value.first} ${value.last}`;
+    },
     onFiltered(filteredItems) {
-      // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
   },
   mounted() {
-    // Set the initial number of items
-    this.totalRows = this.products.items.length;
+    this.totalRows = this.items.length;
   },
 };
 </script>
 
 <style lang="scss" scope>
-#list-products {
+#list-users {
   background-color: white;
   padding: 10px;
   .header {

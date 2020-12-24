@@ -1,6 +1,6 @@
 <template>
   <div id="create-product">
-    <form action="">
+    <form @submit.prevent="addProduct">
       <b-row>
         <b-col cols="6">
           <b-form-group
@@ -11,8 +11,25 @@
             <b-form-input
               id="userName"
               placeholder="Nhập tên sản phẩm"
-              v-model="newProduct.name"
+              v-model.trim="$v.newProduct.name.$model"
+              :class="{
+                'is-invalid': $v.newProduct.name.$error,
+                'is-valid': !$v.newProduct.name.$invalid,
+              }"
             ></b-form-input>
+            <p
+              class="invalid-feedback text-danger"
+              v-if="!$v.newProduct.name.required"
+            >
+              Product name cannot be blank!
+            </p>
+            <p
+              class="invalid-feedback text-danger"
+              v-if="!$v.newProduct.name.minLength"
+            >
+              Product name must greater than
+              {{ $v.newProduct.name.$params.minLength.min }} characters!
+            </p>
           </b-form-group>
         </b-col>
         <b-col cols="6"
@@ -24,9 +41,20 @@
             <b-form-input
               id="userName"
               placeholder="Nhập giá sản phẩm"
-              v-model="newProduct.price"
-            ></b-form-input> </b-form-group
-        ></b-col>
+              v-model.trim="$v.newProduct.price.$model"
+              :class="{
+                'is-invalid': $v.newProduct.price.$error,
+                'is-valid': !$v.newProduct.price.$invalid,
+              }"
+            ></b-form-input>
+            <p
+              class="invalid-feedback text-danger"
+              v-if="!$v.newProduct.price.required"
+            >
+              Price cannot be blank!
+            </p></b-form-group
+          ></b-col
+        >
 
         <b-col cols="12">
           <b-form-checkbox
@@ -39,15 +67,13 @@
         </b-col>
         <b-col cols="12" class="d-flex">
           <b-form-group class="mr-3 ml-auto">
-            <router-link :to="{ name: 'Product', params: { data: 'products' } }"
-              ><b-button block variant="success" @click="addProduct"
-                >Submit</b-button
-              ></router-link
+            <b-button type="submit" block variant="success"
+              >Submit</b-button
             >
           </b-form-group>
           <b-form-group>
             <router-link
-              :to="{ name: 'Product', params: { data: 'products' } }"
+              :to="{ name: 'Product'}"
             >
               <b-button block variant="success">Cancel</b-button></router-link
             >
@@ -59,6 +85,7 @@
 </template>
 <script>
 import { mapMutations } from "vuex";
+import { required, minLength } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
@@ -75,7 +102,11 @@ export default {
   methods: {
     ...mapMutations(["ADD_PRODUCT", "FORMATED_DATE"]),
     addProduct: function() {
-      this.ADD_PRODUCT(this.newProduct);
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        this.ADD_PRODUCT(this.newProduct);
+        this.$router.push({ name: "Product" });
+      }
     },
     getFormattedDate() {
       var date = new Date();
@@ -95,6 +126,17 @@ export default {
         `${+date.getHours() > 12 ? " PM" : " AM"}`;
 
       return str;
+    },
+  },
+  validations: {
+    newProduct: {
+      name: {
+        required,
+        minLength: minLength(3),
+      },
+      price: {
+        required,
+      },
     },
   },
 };

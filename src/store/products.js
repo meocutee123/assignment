@@ -1,39 +1,4 @@
 export default {
-  name: "product",
-  fields: [
-    {
-      // A column that needs custom formatting,
-      // calling formatter 'fullName' in this app
-      key: "name",
-      label: "Tên sản phẩm",
-    },
-    {
-      label: "Ngày tạo",
-      key: "createdDate",
-    },
-    {
-      label: "Ngày cập nhật gần đây",
-      key: "updatedDate",
-    },
-    {
-      label: "Giá",
-      key: "price",
-    },
-    {
-      label: "product",
-      key: "status",
-      formatter: (value, key, item) => {
-        if (item.status) {
-          return "Hoạt động";
-        }
-        return "Không hoạt động";
-      },
-    },
-    {
-      label: "Thao tác",
-      key: "id",
-    },
-  ],
   items: [
     {
       id: 1,
