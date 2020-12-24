@@ -33,7 +33,6 @@ export default {
   }
   a,
   a:hover {
-    color: #fff;
     text-decoration: none;
   }
 }

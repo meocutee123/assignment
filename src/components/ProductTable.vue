@@ -43,8 +43,8 @@
       </b-col>
       <b-col sm="12" md="12">
         <b-table
-          :items="products.items"
-          :fields="products.fields"
+          :items="getAllProduct.items"
+          :fields="getAllProduct.fields"
           :current-page="currentPage"
           :per-page="perPage"
           :filter="filter"
@@ -81,10 +81,10 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters} from "vuex";
 export default {
   computed: {
-    ...mapState(["products"]),
+    ...mapGetters(["getAllProduct"]),
   },
   data() {
     return {

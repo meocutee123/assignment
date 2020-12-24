@@ -1,140 +1,107 @@
 <template>
-  <div id="list-users">
-    <div class="header">
-      <h3>
-        Danh sách {{this.$route.params.title}}
-      </h3>
-      <router-link :to="{ name: 'CreateProduct' }">
-        <b-button variant="success" size="sm"
-          >Tạo {{this.$route.params.title}}</b-button
-        ></router-link
+  <div id="login">
+    <form @submit.prevent="submit">
+      <b-card
+        :img-src="require('@/assets/logo.png')"
+        img-alt="Image"
+        img-top
+        tag="article"
+        class="login-form"
       >
-    </div>
-    <b-row class="mt-3">
-      <b-col sm="6" md="6">
-        <b-form-group class="mb-0">
-          <b-form-select
-            v-model="perPage"
-            :options="pageOptions"
-            size="sm"
-            class="w-auto"
-          ></b-form-select>
+        <b-form-group label="Tên đăng nhập">
+          <b-form-input
+            id="userName"
+            placeholder="Nhập đăng nhập"
+            v-model.trim="$v.input.userName.$model"
+            :class="{
+              'is-invalid': $v.input.userName.$error,
+              'is-valid': !$v.input.userName.$invalid,
+            }"
+          ></b-form-input>
+          <p
+            class="invalid-feedback text-danger"
+            v-if="!$v.input.userName.required"
+          >
+            Last name cannot be blank!
+          </p>
         </b-form-group>
-      </b-col>
-
-      <b-col sm="6" md="6">
-        <b-form-group class="w-50 ml-auto">
-          <b-input-group size="sm">
-            <b-form-input
-              id="filter-input"
-              v-model="filter"
-              type="search"
-              placeholder="Tìm kiếm"
-            ></b-form-input>
-            <b-button
-              size="sm"
-              variant="success"
-              :disabled="!filter"
-              @click="filter = ''"
-              >Xóa</b-button
-            >
-          </b-input-group>
+        <b-form-group label="Mật khẩu">
+          <b-form-input
+            id="password"
+            placeholder="Nhập mật khẩu"
+            v-model.trim="$v.input.password.$model"
+            :class="{
+              'is-invalid': $v.input.password.$error,
+              'is-valid': !$v.input.password.$invalid,
+            }"
+          ></b-form-input>
+          <p
+            class="invalid-feedback text-danger"
+            v-if="!$v.input.password.required"
+          >
+            Last name cannot be blank!
+          </p>
         </b-form-group>
-      </b-col>
-      <b-col sm="12" md="12">
-        <b-table
-          :items="this.$route.params.data.items"
-          :fields="this.$route.params.data.fields"
-          :current-page="currentPage"
-          :per-page="perPage"
-          :filter="filter"
-          :filter-included-fields="filterOn"
-          @filtered="onFiltered"
-        >
-          <template #cell(id)="data">
-            <!-- `data.value` is the value after formatted by the Formatter -->
-            <router-link
-              :to="{ name: 'Edit', params: { id: data.value } }"
-              class="ml-3"
-            >
-              <i
-                class="fas fa-edit"
-                style="font-weight: bold; color: #42b983;"
-              ></i>
-            </router-link>
-          </template>
-        </b-table>
-      </b-col>
-      <b-col sm="12" md="12">
-        <b-pagination
-          v-model="currentPage"
-          :total-rows="totalRows"
-          :per-page="perPage"
-          align="fill"
-          size="sm"
-          class="my-0 w-25 ml-auto"
-        ></b-pagination
-      ></b-col>
-    </b-row>
-    <router-view />
+        <b-form-group>
+          <b-button type="submit" block variant="success">Đăng nhập</b-button>
+        </b-form-group>
+      </b-card>
+    </form>
   </div>
 </template>
-
 <script>
-import { mapState } from "vuex";
+import { required } from "vuelidate/lib/validators";
+
 export default {
-  // props:{
-  //   title: {
-  //     type: String,
-  //     required: true,
-  //     default: 'YOU MUST PUT THE TITLE HERE!!'
-  //   },
-  //   data: {
-  //     type: Array, 
-  //     required: true
-  //   }
-  // },
-  computed: {
-    ...mapState(["users"]),
-  },
   data() {
     return {
-      totalRows: 1,
-      currentPage: 1,
-      perPage: 20,
-      filter: null,
-      filterOn: [],
-      pageOptions: [20, 50, 100, { value: 1000, text: "Show all" }],
+      input: {
+        userName: "",
+        password: "",
+      },
     };
   },
   methods: {
-    fullName(value) {
-      return `${value.first} ${value.last}`;
-    },
-    onFiltered(filteredItems) {
-      // Trigger pagination to update the number of buttons/pages due to filtering
-      this.totalRows = filteredItems.length;
-      this.currentPage = 1;
+    submit() {
+      this.$v.$touch();
+
+      if (this.$v.$invalid) {
+        if (this.input.userName == "admin" && this.input.password == "123") {
+          sessionStorage.setItem("auth", true);
+          this.$router.replace("/");
+        }
+      } else {
+        console.log("Username or password is incorect");
+      }
     },
   },
-  mounted() {
-    // Set the initial number of items
-    this.totalRows = this.users.items.length;
+  computed: {},
+  validations: {
+    input: {
+      userName: {
+        required,
+      },
+      password: {
+        required,
+      },
+    },
   },
 };
 </script>
-
 <style lang="scss" scope>
-#list-users {
-  background-color: white;
-  padding: 10px;
-  .header {
-    display: flex;
-    justify-content: space-between;
-  }
-  .page-item.active .page-link {
-    background-color: #42b983 !important;
-    border-color: #42b983 !important;
+form {
+  width: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  .login-form {
+    padding: 20px;
+    img {
+      max-width: 250px;
+      margin: 0 auto;
+    }
   }
 }
 </style>

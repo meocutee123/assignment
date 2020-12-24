@@ -1,5 +1,6 @@
 <template>
   <div id="create-user">
+  {{ currenUser }}
     <form action="">
       <b-row>
         <b-col cols="6">
@@ -11,7 +12,7 @@
             <b-form-input
               id="userName"
               placeholder="Nhập tên"
-              v-model="userDetail.userName"
+              v-model="currenUser.userName"
               disabled
             ></b-form-input>
           </b-form-group>
@@ -25,7 +26,7 @@
           >
             <b-form-input
               placeholder="Nhập tên"
-              v-model="userDetail.name.first"
+              v-model="currenUser.name.first"
             ></b-form-input> </b-form-group
         ></b-col>
         <b-col cols="6"
@@ -37,24 +38,24 @@
             <b-form-input
               id="userName"
               placeholder="Nhập họ"
-              v-model="userDetail.name.last"
+              v-model="currenUser.name.last"
             ></b-form-input> </b-form-group
         ></b-col>
         <b-col cols="6">
-          <b-form-checkbox v-model="userDetail.status">
+          <b-form-checkbox v-model="currenUser.status">
             Trạng thái
           </b-form-checkbox>
         </b-col>
         <b-col cols="12" class="d-flex">
           <b-form-group class="mr-3 ml-auto">
             <router-link to="/">
-              <b-button block variant="success"
-                >Cập nhật</b-button
-              ></router-link
+              <b-button block variant="success">Cập nhật</b-button></router-link
             >
           </b-form-group>
           <b-form-group>
-            <router-link to="/"><b-button block variant="success">Cancel</b-button></router-link>
+            <router-link to="/"
+              ><b-button block variant="success">Cancel</b-button></router-link
+            >
           </b-form-group>
         </b-col>
       </b-row>
@@ -62,19 +63,19 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { mapState, mapActions } from "vuex";
 export default {
-  props: ['id'],
+  props: ["id"],
   data() {
     return {};
   },
-  methods: {
-    ...mapMutations(['EDIT_USER'])
-
+  created() {
+    this.LOAD_USER(this.id);
   },
-  computed: {
-    ...mapState(['userDetail']),
-  }
+  methods: {
+    ...mapActions(["LOAD_USER"]),
+  },
+  computed: { ...mapState(["currenUser"]) },
 };
 </script>
 <style lang="scss" scope>

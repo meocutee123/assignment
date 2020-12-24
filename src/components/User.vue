@@ -11,7 +11,7 @@
           >Hồ sơ</router-link
         ></b-dropdown-item
       >
-      <b-dropdown-item><router-link to="/">Thoát </router-link></b-dropdown-item>
+      <b-dropdown-item @click="logout">Thoát</b-dropdown-item>
      
     </b-dropdown>
   </div>
@@ -21,6 +21,11 @@ export default {
   data(){
     return {
 
+    }
+  }, methods: {
+    logout(){
+      sessionStorage.removeItem("auth")
+       this.$router.replace("/login");
     }
   }
 };

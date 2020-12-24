@@ -7,30 +7,29 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     users: users,
-    userDetail: {},
+    currenUser: {},
     products: products,
-    authenticated: false
+  },
+  getters: {
+    getAllProduct: state => {
+      return state.products
+    }
   },
   mutations: {
-    AUTH: (state, status) => {
-      state.authenticated == status;
-    },
     ADD_USER: (state, user) => {
       state.users.items.push(user);
     },
     ADD_PRODUCT: (state, product) => {
       state.products.items.push(product);
     },
-    // EDIT_USER: (state, id) => {
-    //   state.userDetail = users.items.find(user => user.id == id);
-    // },
-    // EDIT_PRODUCT: (state, id, product) => {
-    //   state.products[id] = product;
-    // },
-    // EDIT_PRODUCT: (state, product) => {
-
-    // },
+    LOAD_USER: (state, id) => {
+      state.currenUser = users.items.find(user => user.id == id);
+    },
   },
-  actions: {},
+  actions: {
+    LOAD_USER: (context, id) => {
+      context.commit('LOAD_USER', id)
+    }
+  },
   modules: {},
 });

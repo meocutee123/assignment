@@ -82,4 +82,8 @@ nav {
     }
   }
 }
+a{
+  text-decoration: none;
+  color: white;
+}
 </style>

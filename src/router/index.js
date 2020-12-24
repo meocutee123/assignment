@@ -2,13 +2,16 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
-
 const routes = [
   {
     path: "/",
     component: () =>
       import(/* webpackChunkName: "listUser" */ "../views/Home.vue"),
     props: true,
+    beforeEnter: (to, from, next) => {
+      let isAuth = sessionStorage.getItem("auth");
+      return isAuth ? next() : next("/login");
+    },
     children: [
       {
         path: "",

@@ -11,8 +11,25 @@
             <b-form-input
               id="userName"
               placeholder="Nhập tên"
-              v-model="newUser.userName"
+              v-model.trim="$v.newUser.userName.$model"
+              :class="{
+                'is-invalid': $v.newUser.userName.$error,
+                'is-valid': !$v.newUser.userName.$invalid,
+              }"
             ></b-form-input>
+            <p
+              class="invalid-feedback text-danger"
+              v-if="!$v.newUser.userName.required"
+            >
+              Username cannot be blank!
+            </p>
+            <p
+              class="invalid-feedback text-danger"
+              v-if="!$v.newUser.userName.minLength"
+            >
+              Username must greater than
+              {{ $v.newUser.userName.$params.minLength.min }} characters!
+            </p>
           </b-form-group>
         </b-col>
         <b-col cols="6"></b-col>
@@ -24,9 +41,20 @@
           >
             <b-form-input
               placeholder="Nhập tên"
-              v-model="newUser.name.first"
-            ></b-form-input> </b-form-group
-        ></b-col>
+              v-model.trim="$v.newUser.name.first.$model"
+              :class="{
+                'is-invalid': $v.newUser.name.first.$error,
+                'is-valid': !$v.newUser.name.first.$invalid,
+              }"
+            ></b-form-input>
+            <p
+              class="invalid-feedback text-danger"
+              v-if="!$v.newUser.name.first.required"
+            >
+              First name cannot be blank!
+            </p>
+          </b-form-group></b-col
+        >
         <b-col cols="6"
           ><b-form-group
             id="fieldset-1"
@@ -36,9 +64,20 @@
             <b-form-input
               id="userName"
               placeholder="Nhập họ"
-              v-model="newUser.name.last"
-            ></b-form-input> </b-form-group
-        ></b-col>
+              v-model.trim="$v.newUser.name.last.$model"
+              :class="{
+                'is-invalid': $v.newUser.name.last.$error,
+                'is-valid': !$v.newUser.name.last.$invalid,
+              }"
+            ></b-form-input>
+            <p
+              class="invalid-feedback text-danger"
+              v-if="!$v.newUser.name.last.required"
+            >
+              Last name cannot be blank!
+            </p>
+          </b-form-group></b-col
+        >
         <b-col cols="6">
           <b-form-checkbox v-model="newUser.status">
             Trạng thái
@@ -64,7 +103,14 @@
 </template>
 <script>
 import { mapMutations } from "vuex";
+import { required, minLength } from "vuelidate/lib/validators";
 export default {
+  props: {
+    id: {
+      type: Number,
+      required: true
+    }
+  },
   data() {
     return {
       newUser: {
@@ -76,6 +122,7 @@ export default {
       },
     };
   },
+
   methods: {
     ...mapMutations(["ADD_USER"]),
     addUser: function() {
@@ -99,6 +146,21 @@ export default {
         `${+date.getHours() > 12 ? " PM" : " AM"}`;
 
       return str;
+    },
+  },
+  validations: {
+    newUser: {
+      name: {
+        first: {
+          required,
+        }, last:{
+          required
+        }
+      },
+      userName: {
+        required,
+        minLength: minLength(3),
+      },
     },
   },
 };

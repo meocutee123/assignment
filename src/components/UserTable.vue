@@ -4,7 +4,7 @@
       <h3>
         Danh sách người dùng
       </h3>
-      <router-link :to="{ name: 'CreateProduct' }">
+      <router-link :to="{ name: 'Create' }">
         <b-button variant="success" size="sm"
           >Tạo người dùng</b-button
         ></router-link
@@ -53,15 +53,12 @@
         >
           <template #cell(id)="data">
             <!-- `data.value` is the value after formatted by the Formatter -->
-            <router-link
-              :to="{ name: 'Edit', params: { id: data.value } }"
-              class="ml-3"
-            >
+            <router-link :to="{ name: 'Edit', params: { id: data.value } }">
               <i
                 class="fas fa-edit"
                 style="font-weight: bold; color: #42b983;"
-              ></i>
-            </router-link>
+              ></i
+            ></router-link>
           </template>
         </b-table>
       </b-col>
@@ -81,7 +78,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState} from "vuex";
 export default {
   computed: {
     ...mapState(["users"]),
@@ -104,7 +101,7 @@ export default {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
-    },
+    }
   },
   mounted() {
     // Set the initial number of items

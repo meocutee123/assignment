@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-    <form action="">
+    <form @submit.prevent="submit">
       <b-card
         :img-src="require('@/assets/logo.png')"
         img-alt="Image"
@@ -8,44 +8,76 @@
         tag="article"
         class="login-form"
       >
-        <b-form-group id="fieldset-1" label="Tên đăng nhập" label-for="input-1">
+        <b-form-group label="Tên đăng nhập">
           <b-form-input
             id="userName"
             placeholder="Nhập đăng nhập"
-            v-model="userName"
+            v-model.trim="$v.userName.$model"
+            :class="{
+              'is-invalid': $v.userName.$error,
+              'is-valid': !$v.userName.$invalid,
+            }"
           ></b-form-input>
+          <span
+            class="invalid-feedback text-danger"
+            v-if="!$v.userName.required"
+          >
+            Last name cannot be blank!
+          </span>
         </b-form-group>
-        <b-form-group id="fieldset-1" label="Mật khẩu" label-for="input-1">
+        <b-form-group label="Mật khẩu">
           <b-form-input
-            id="password"
             placeholder="Nhập mật khẩu"
-            v-model="password"
+            v-model.trim="$v.password.$model"
+            :class="{
+              'is-invalid': $v.password.$error,
+              'is-valid': !$v.password.$invalid,
+            }"
           ></b-form-input>
+          <span
+            class="invalid-feedback text-danger"
+            v-if="!$v.password.required"
+          >
+            Last name cannot be blank! </span
+          >
         </b-form-group>
         <b-form-group>
-          <b-button block variant="success">Đăng nhập</b-button>
+          <b-button type="submit" block variant="success">Đăng nhập</b-button>
         </b-form-group>
       </b-card>
     </form>
   </div>
 </template>
 <script>
+import { required } from "vuelidate/lib/validators";
+
 export default {
   data() {
     return {
-      input: {
-        userName: "",
-        password: "",
-      },
+      userName: "",
+      password: "",
     };
   },
   methods: {
-    login (){
-      // if(this.input.userName == 'admin' && this.input.password == '123'){
-        
-      // }
-    }
-  }
+    submit() {
+      this.$v.$touch();
+
+      if (this.$v.$invalid) {
+        sessionStorage.setItem("auth", true);
+        this.$router.replace("/");
+        console.log("valid");
+      }
+    },
+  },
+  computed: {},
+  validations: {
+    userName: {
+      required,
+    },
+    password: {
+      required,
+    },
+  },
 };
 </script>
 <style lang="scss" scope>
