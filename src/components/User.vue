@@ -5,29 +5,24 @@
         <b-avatar src="@/assets/person.png"></b-avatar> Settings
       </template>
       <template #avatar></template>
-      <b-dropdown-item
-        ><router-link
-          to="{createProduct}"
-          >Hồ sơ</router-link
-        ></b-dropdown-item
-      >
+      <router-link to="/profile">
+        <b-dropdown-item>Hồ sơ</b-dropdown-item>
+      </router-link>
       <b-dropdown-item @click="logout">Thoát</b-dropdown-item>
-     
     </b-dropdown>
   </div>
 </template>
 <script>
 export default {
-  data(){
-    return {
-
-    }
-  }, methods: {
-    logout(){
-      sessionStorage.removeItem("auth")
-       this.$router.replace("/login");
-    }
-  }
+  data() {
+    return {};
+  },
+  methods: {
+    logout() {
+      sessionStorage.removeItem("auth");
+      this.$router.replace("/login");
+    },
+  },
 };
 </script>
 
@@ -37,15 +32,13 @@ button:focus {
 }
 .user {
   margin: 0 0 10px 10px;
-  padding: 5px 0; 
+  padding: 5px 0;
   background-color: white;
   text-align: end;
   z-index: 5;
-
   a {
     color: black !important;
     text-decoration: none;
   }
-
 }
 </style>

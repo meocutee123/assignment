@@ -51,7 +51,7 @@
         >
           <template #cell(id)="data">
             <!-- `data.value` is the value after formatted by the Formatter -->
-            <router-link :to="{ name: 'Edit', params: { id: data.value } }">
+            <router-link :to="{ name: editTo, params: { id: data.value } }">
               <i
                 class="fas fa-edit"
                 style="font-weight: bold; color: #42b983;"
@@ -80,17 +80,18 @@ export default {
   props: {
     title: { type: String, required: true },
     linkTo: { type: String, required: true },
+    editTo: { type: String, required: true },
     items: { type: Array, required: true },
     fields: { type: Array, required: true },
+    perPage: { type: Number, required: true },
+    pageOptions: { type: Array, required: true },
   },
   data() {
     return {
       totalRows: 1,
       currentPage: 1,
-      perPage: 20,
       filter: null,
       filterOn: [],
-      pageOptions: [20, 50, 100, { value: 1000, text: "Show all" }],
     };
   },
   methods: {
@@ -112,6 +113,8 @@ export default {
 #list-users {
   background-color: white;
   padding: 10px;
+  margin: 0 10px;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   .header {
     display: flex;
     justify-content: space-between;

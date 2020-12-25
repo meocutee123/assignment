@@ -63,12 +63,12 @@ export default {
       this.$v.$touch();
 
       if (this.$v.$invalid) {
-        if (this.userName == "admin") {
-          sessionStorage.setItem("auth", true);
-          this.$router.replace("/");
-        }else{
-          console.log("Username or password is incorrect");
-        }
+        // if (this.userName == "admin") {
+        //   sessionStorage.setItem("auth", true);
+        //   this.$router.replace("/");
+        // }else{
+        //   console.log("Username or password is incorrect");
+        // }
       }
     },
   },

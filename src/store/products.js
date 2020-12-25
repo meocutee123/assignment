@@ -6,7 +6,7 @@ export default {
       createdDate: "12/21/2020, 00:00:00 AM",
       updatedDate: "12/21/2020, 00:00:00 AM",
       price: "9.99",
-      status: false,
+      status: true,
     },
     {
       id: 2,

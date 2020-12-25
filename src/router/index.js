@@ -33,7 +33,7 @@ const routes = [
         path: "user/:id/edit",
         name: "Edit",
         component: () =>
-          import(/* webpackChunkName: "create" */ "../components/EditUser.vue"),
+          import(/* webpackChunkName: "edit" */ "../components/EditUser.vue"),
         props: true,
       },
       {
@@ -58,7 +58,7 @@ const routes = [
         name: "EditProduct",
         component: () =>
           import(
-            /* webpackChunkName: "EditProduct" */ "../components/EditProduct.vue"
+            /* webpackChunkName: "editProduct" */ "../components/EditProduct.vue"
           ),
         props: true,
       },

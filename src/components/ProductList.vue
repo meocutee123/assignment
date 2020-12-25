@@ -1,6 +1,14 @@
 <template>
   <div id="table">
-    <Table :title="title" :linkTo="linkTo" :items="getAllProduct.items" :fields="fields" />
+    <Table
+      :title="title"
+      :linkTo="linkTo"
+      :editTo="editTo"
+      :items="getAllProduct.items"
+      :fields="fields"
+      :perPage="perPage"
+      :pageOptions="pageOptions"
+    />
   </div>
 </template>
 <script>
@@ -11,6 +19,7 @@ export default {
     return {
       title: "sản phẩm",
       linkTo: "CreateProduct",
+      editTo: 'EditProduct',
       fields: [
         {
           // A column that needs custom formatting,
@@ -45,6 +54,8 @@ export default {
           key: "id",
         },
       ],
+      pageOptions: [20, 50, 100, { value: 1000, text: "Show all" }],
+      perPage: 20,
     };
   },
   components: {

@@ -1,16 +1,25 @@
 <template>
   <div id="table">
-    <Table :title="title" :linkTo="linkTo" :items="getAllUser.items" :fields="fields" />
+    <Table
+      :title="title"
+      :linkTo="linkTo"
+      :editTo="editTo"
+      :items="getAllUser.items"
+      :fields="fields"
+      :perPage="perPage"
+      :pageOptions="pageOptions"
+    />
   </div>
 </template>
 <script>
 import Table from "@/Elements/Table";
-import {mapGetters} from 'vuex'
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
       title: "người dùng",
       linkTo: "Create",
+      editTo: 'Edit',
       fields: [
         {
           // A column that needs custom formatting,
@@ -43,13 +52,15 @@ export default {
           key: "id",
         },
       ],
+      pageOptions: [20, 50, 100, { value: 1000, text: "Show all" }],
+      perPage: 20,
     };
   },
   components: {
     Table,
   },
   computed: {
-      ...mapGetters(['getAllUser'])
+    ...mapGetters(["getAllUser"]),
   },
 };
 </script>
