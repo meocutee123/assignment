@@ -11,7 +11,7 @@
             <b-form-input
               id="userName"
               placeholder="Nhập tên"
-              v-model="currentUser.userName"
+              v-model="user.userName"
               disabled
             ></b-form-input>
           </b-form-group>
@@ -20,14 +20,11 @@
         <b-col cols="6"
           ><div class="form-group">
             <label for="first">Tên nhân viên</label>
-            <input
-              type="text"
-              class="form-control"
-              ref="first"
-              id="first"
-              :value="currentUser.name.first"
-              @input="user.name.first = $event.target.value"
-            /></div
+            <b-form-input
+              id="userName"
+              placeholder="Tên nhân viên"
+              v-model="user.name.first"
+            ></b-form-input></div
         ></b-col>
         <b-col cols="6"
           ><div class="form-group">
@@ -37,12 +34,11 @@
               class="form-control"
               ref="last"
               id="last"
-              :value="currentUser.name.last"
-              @input="user.name.last = $event.target.value"
+              v-model="user.name.last"
             /></div
         ></b-col>
         <b-col cols="6">
-          <b-form-checkbox v-model="currentUser.status">
+          <b-form-checkbox v-model="user.status">
             Trạng thái
           </b-form-checkbox>
         </b-col>
@@ -61,7 +57,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   props: ["id"],
   data() {
@@ -72,21 +68,29 @@ export default {
           first: "",
           last: "",
         },
+        status: "",
       },
     };
   },
+  mounted() {
+    this.user = Object.assign(
+      {},
+      this.user,
+      JSON.parse(JSON.stringify(this.currentUser))
+    );
+  },
   methods: {
     ...mapActions(["LOAD_USER"]),
-
     update() {
       this.$store.dispatch("UPDATE_USER", this.user);
       this.$router.replace("/");
     },
   },
   computed: {
+    ...mapState(['currentUser']),
     currentUser() {
       this.LOAD_USER(this.id);
-      return this.$store.state.currentUser;
+      return this.$store.state.user.currentUser 
     },
   },
 };

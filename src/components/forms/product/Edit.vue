@@ -1,5 +1,5 @@
 <template>
-  <div id="create-product">
+  <div id="create-product">{{product}}
     <form action="" @submit.prevent="update">
       <b-row>
         <b-col cols="6">
@@ -12,7 +12,7 @@
               id="userName"
               disabled
               placeholder="Nhập tên sản phẩm"
-              v-model="currentProduct.name"
+              v-model="product.name"
             ></b-form-input>
           </b-form-group>
         </b-col>
@@ -27,8 +27,7 @@
               id="userName"
               placeholder="Nhập giá sản phẩm"
               type="text"
-              :value="currentProduct.price"
-              @input="product.price = $event.target.value"/></b-form-group
+             v-model="product.price"/></b-form-group
         ></b-col>
         <b-col cols="12">
           <div class="form-check">
@@ -36,7 +35,7 @@
               type="checkbox"
               class="form-check-input"
               id="checkbox-1"
-              :checked="currentProduct.status"
+              v-model="product.status"
             />
             <label for="checkbox-1" class="form-checkbox-label"
               >Trạng thái</label
@@ -70,19 +69,20 @@ export default {
       },
     };
   },
+    mounted() {
+    this.product = Object.assign({}, this.product, JSON.parse(JSON.stringify(this.currentProduct)));
+  },
   methods: {
     ...mapActions(["LOAD_PRODUCT"]),
-    
     update() {
       this.$store.dispatch("UPDATE_PRODUCT", this.product);
       this.$router.replace("/product");
-      console.log(this.product);
     },
   },
   computed: {
     currentProduct() {
       this.LOAD_PRODUCT(this.id);
-      return this.$store.state.currentProduct;
+      return this.$store.state.product.currentProduct;
     },
   },
 };

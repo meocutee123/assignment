@@ -62,13 +62,13 @@ export default {
     submit() {
       this.$v.$touch();
 
-      if (this.$v.$invalid) {
-        // if (this.userName == "admin") {
-        //   sessionStorage.setItem("auth", true);
-        //   this.$router.replace("/");
-        // }else{
-        //   console.log("Username or password is incorrect");
-        // }
+      if (!this.$v.$invalid) {
+        if (this.userName == "admin" && this.password == '123') {
+          sessionStorage.setItem("auth", true);
+          this.$router.replace("/");
+        }else{
+          console.log("Username or password is incorrect");
+        }
       }
     },
   },

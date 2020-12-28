@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
+// import authRouter from './checkAuth.js'
+
 Vue.use(VueRouter);
 const routes = [
   {
@@ -8,16 +10,13 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "listUser" */ "../views/Home.vue"),
     props: true,
-    beforeEnter: (to, from, next) => {
-      let isAuth = sessionStorage.getItem("auth");
-      return isAuth ? next() : next("/login");
-    },
     children: [
       {
         path: "",
+        name: 'Home',
         component: () =>
           import(
-            /* webpackChunkName: "table" */ "../components/UserList.vue"
+            /* webpackChunkName: "table" */ "@/components/tables/User.vue"
           ),
         props: true,
       },
@@ -26,14 +25,16 @@ const routes = [
         name: "Create",
         component: () =>
           import(
-            /* webpackChunkName: "create" */ "../components/CreateUser.vue"
+            /* webpackChunkName: "create" */ "@/components/forms/user/Create.vue"
           ),
       },
       {
         path: "user/:id/edit",
         name: "Edit",
         component: () =>
-          import(/* webpackChunkName: "edit" */ "../components/EditUser.vue"),
+          import(
+            /* webpackChunkName: "edit" */ "@/components/forms/user/Edit.vue"
+          ),
         props: true,
       },
       {
@@ -41,7 +42,7 @@ const routes = [
         name: "Product",
         component: () =>
           import(
-            /* webpackChunkName: "product" */ "../components/ProductList.vue"
+            /* webpackChunkName: "product" */ "@/components/tables/Product.vue"
           ),
         props: true,
       },
@@ -50,7 +51,7 @@ const routes = [
         name: "CreateProduct",
         component: () =>
           import(
-            /* webpackChunkName: "createProduct" */ "../components/CreateProduct.vue"
+            /* webpackChunkName: "createProduct" */ "@/components/forms/product/Create.vue"
           ),
       },
       {
@@ -58,13 +59,19 @@ const routes = [
         name: "EditProduct",
         component: () =>
           import(
-            /* webpackChunkName: "editProduct" */ "../components/EditProduct.vue"
+            /* webpackChunkName: "editProduct" */ "@/components/forms/product/Edit.vue"
           ),
         props: true,
       },
+      {
+        path: "/test",
+        name: "test",
+        meta: { layout: "blank" },
+        component: () =>
+          import(/* webpackChunkName: "notFound" */ "@/views/test"),
+      },
     ],
   },
-
   {
     path: "/login",
     name: "Login",
@@ -77,7 +84,7 @@ const routes = [
     name: "notFound",
     meta: { layout: "blank" },
     component: () =>
-      import(/* webpackChunkName: "notFound" */ "../views/NotFound"),
+      import(/* webpackChunkName: "notFound" */ "@/views/NotFound"),
   },
 ];
 
@@ -85,6 +92,12 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  let isAuth = sessionStorage.getItem("auth");
+  if (to.name !== "Login" && !isAuth) next({ name: "Login" });
+  else next();
 });
 
 export default router;

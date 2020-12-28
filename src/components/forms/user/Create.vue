@@ -100,13 +100,13 @@
   </div>
 </template>
 <script>
-import { mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
       newUser: {
-        id: this.$store.state.users.items.length + 1,
+        id: this.getID,
         name: { first: "", last: "" },
         userName: "",
         createdDate: this.getFormattedDate(),
@@ -140,7 +140,6 @@ export default {
         ":" +
         date.getSeconds() +
         `${+date.getHours() > 12 ? " PM" : " AM"}`;
-
       return str;
     },
   },
@@ -160,6 +159,13 @@ export default {
       },
     },
   },
+  computed: {
+    ...mapGetters(['getAllUsers']),
+    getID(){
+      const id = this.getAllUsers.items.length + 1;
+      return id
+    }
+  }
 };
 </script>
 <style lang="scss" scope="this api replaced by slot-scope in 2.5.0+">

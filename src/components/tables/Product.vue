@@ -3,12 +3,16 @@
     <Table
       :title="title"
       :linkTo="linkTo"
-      :editTo="editTo"
-      :items="getAllUser.items"
+      :items="getAllProducts.items"
       :fields="fields"
       :perPage="perPage"
       :pageOptions="pageOptions"
-    />
+    >
+      <template #cell(id)="data">
+        <router-link :to="{ name: 'EditProduct', params: { id: data.value } }">
+          <i class="fas fa-edit" style="font-weight: bold; color: #42b983;"></i>
+        </router-link> </template
+    ></Table>
   </div>
 </template>
 <script>
@@ -17,34 +21,38 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      title: "người dùng",
-      linkTo: "Create",
-      editTo: 'Edit',
+      title: {
+        name: "Danh sách sản phẩm",
+        button: "Tạo sản phẩm",
+      },
+      linkTo: "CreateProduct",
       fields: [
         {
           // A column that needs custom formatting,
           // calling formatter 'fullName' in this app
           key: "name",
-          label: "Tên đầy đủ",
-          formatter: "fullName",
-        },
-        // A regular column
-        {
-          label: "Tên đăng nhập",
-          key: "userName",
+          label: "Tên sản phẩm",
         },
         {
           label: "Ngày tạo",
           key: "createdDate",
         },
         {
-          label: "Trạng thái",
+          label: "Ngày cập nhật gần đây",
+          key: "updatedDate",
+        },
+        {
+          label: "Giá",
+          key: "price",
+        },
+        {
+          label: "product",
           key: "status",
           formatter: (value, key, item) => {
             if (item.status) {
-              return "Đang làm";
+              return "Hoạt động";
             }
-            return "Nghỉ việc";
+            return "Không hoạt động";
           },
         },
         {
@@ -60,7 +68,7 @@ export default {
     Table,
   },
   computed: {
-    ...mapGetters(["getAllUser"]),
+    ...mapGetters(["getAllProducts"]),
   },
 };
 </script>

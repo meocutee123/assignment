@@ -1,18 +1,18 @@
 <template>
-  <div id="list-users">
+  <div id="list">
     <div class="header">
-      <h3>Danh sách {{ title }}</h3>
+      <h3>{{ title.name }}</h3>
       <router-link :to="{ name: linkTo }">
-        <b-button variant="success" size="sm"
-          >Tạo {{ title }}</b-button
-        ></router-link
+        <b-button variant="success" size="sm">{{
+          title.button
+        }}</b-button></router-link
       >
     </div>
     <b-row class="mt-3">
       <b-col sm="6" md="6">
         <b-form-group class="mb-0">
           <b-form-select
-            v-model="perPage"
+            v-model="perPageLocal"
             :options="pageOptions"
             size="sm"
             class="w-auto"
@@ -44,19 +44,16 @@
           :items="items"
           :fields="fields"
           :current-page="currentPage"
-          :per-page="perPage"
+          :per-page="perPageLocal"
           :filter="filter"
           :filter-included-fields="filterOn"
           @filtered="onFiltered"
+          show-empty
         >
-          <template #cell(id)="data">
-            <!-- `data.value` is the value after formatted by the Formatter -->
-            <router-link :to="{ name: editTo, params: { id: data.value } }">
-              <i
-                class="fas fa-edit"
-                style="font-weight: bold; color: #42b983;"
-              ></i
-            ></router-link>
+          <template v-slot:cell(id)="data">
+            <slot name="cell(id)" v-bind="data">
+            
+            </slot>
           </template>
         </b-table>
       </b-col>
@@ -64,7 +61,7 @@
         <b-pagination
           v-model="currentPage"
           :total-rows="totalRows"
-          :per-page="perPage"
+          :per-page="perPageLocal"
           align="fill"
           size="sm"
           class="my-0 w-25 ml-auto"
@@ -78,9 +75,8 @@
 <script>
 export default {
   props: {
-    title: { type: String, required: true },
+    title: { type: Object, required: true },
     linkTo: { type: String, required: true },
-    editTo: { type: String, required: true },
     items: { type: Array, required: true },
     fields: { type: Array, required: true },
     perPage: { type: Number, required: true },
@@ -92,6 +88,7 @@ export default {
       currentPage: 1,
       filter: null,
       filterOn: [],
+      perPageLocal: this.perPage,
     };
   },
   methods: {
@@ -110,7 +107,7 @@ export default {
 </script>
 
 <style lang="scss" scope>
-#list-users {
+#list {
   background-color: white;
   padding: 10px;
   margin: 0 10px;

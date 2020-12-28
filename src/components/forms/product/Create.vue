@@ -67,14 +67,10 @@
         </b-col>
         <b-col cols="12" class="d-flex">
           <b-form-group class="mr-3 ml-auto">
-            <b-button type="submit" block variant="success"
-              >Submit</b-button
-            >
+            <b-button type="submit" block variant="success">Submit</b-button>
           </b-form-group>
           <b-form-group>
-            <router-link
-              :to="{ name: 'Product'}"
-            >
+            <router-link :to="{ name: 'Product' }">
               <b-button block variant="success">Cancel</b-button></router-link
             >
           </b-form-group>
@@ -84,13 +80,13 @@
   </div>
 </template>
 <script>
-import { mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
       newProduct: {
-        id: this.$store.state.products.items.length + 1,
+        id: this.getID + 1,
         name: "",
         createdDate: this.getFormattedDate(),
         updatedDate: this.getFormattedDate(),
@@ -100,7 +96,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["ADD_PRODUCT", "FORMATED_DATE"]),
+    ...mapMutations(["ADD_PRODUCT"]),
     addProduct: function() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
@@ -137,6 +133,13 @@ export default {
       price: {
         required,
       },
+    },
+  },
+  computed: {
+    ...mapGetters(["getAllproducts"]),
+    getID() {
+      const id = this.getAllproducts.items.length + 1;
+      return id;
     },
   },
 };

@@ -20,8 +20,8 @@
   </div>
 </template>
 <script>
-import Nav from '@/components/Nav'
-import User from '@/components/User'
+import Nav from '@/components/common/Nav'
+import User from '@/components/common/Header'
 export default {
     components:{
         Nav, User

@@ -10,13 +10,13 @@
         variant="none"
         class="text-left d-flex"
       >
-        <b-icon icon="gear-fill" aria-hidden="true" class="mr-2"></b-icon>
+        <b-icon icon="gear-fill" class="mr-2"></b-icon>
         <span class="mr-auto">Settings</span>
       </b-button>
-      <b-collapse id="setting-list" accordion="my-accordion" role="tabpanel">
+      <b-collapse id="setting-list">
         <ul>
-         <router-link to="/"> <li>Users</li></router-link>
-          <router-link :to="{name: 'Product'}"><li>Products</li></router-link>
+          <router-link :to="{name: 'Home'}"> <li> Users</li></router-link>
+          <router-link :to="{ name: 'Product' }"><li>Products</li></router-link>
         </ul>
       </b-collapse>
       <b-button block variant="none" class="text-left">
@@ -27,16 +27,15 @@
   </nav>
 </template>
 <script>
-import {mapState} from 'vuex'
+import { mapState } from "vuex";
 export default {
-  data(){
-    return{
-    }
+  data() {
+    return {};
   },
   computed: {
-    ...mapState(['products'])
-  }
-}
+    ...mapState(["products"]),
+  },
+};
 </script>
 <style lang="scss" scoped>
 button:focus {
@@ -80,7 +79,7 @@ nav {
     }
   }
 }
-a{
+a {
   text-decoration: none;
   color: white;
 }
