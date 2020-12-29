@@ -1,5 +1,5 @@
 <template>
-  <div id="create-user">
+  <div id="create-user">{{getID}}
     <form @submit.prevent="addUser">
       <b-row>
         <b-col cols="6">

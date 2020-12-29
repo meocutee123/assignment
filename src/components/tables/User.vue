@@ -17,7 +17,7 @@
   </div>
 </template>
 <script>
-import Table from "@/Elements/Table";
+import Table from "@/elements/Table";
 import { mapGetters } from "vuex";
 export default {
   data() {

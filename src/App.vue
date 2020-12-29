@@ -27,7 +27,7 @@ export default {
   padding: 0;
   margin: 0;
   overflow: hidden;
-  label {
+  label, legend {
     font-weight: bold;
     color: #42b983;
   }

@@ -61,7 +61,6 @@ export default {
   methods: {
     submit() {
       this.$v.$touch();
-
       if (!this.$v.$invalid) {
         if (this.userName == "admin" && this.password == '123') {
           sessionStorage.setItem("auth", true);

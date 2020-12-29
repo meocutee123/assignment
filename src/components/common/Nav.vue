@@ -3,26 +3,25 @@
     <div class="logo">
       <img src="@/assets/logo.png" alt="logo" />
     </div>
-    <div class="layout-menu">
+    <div class="layout-menu" v-for="(layout, index) in layouts" :key="index">
       <b-button
         block
-        v-b-toggle.setting-list
+        v-b-toggle="`${index}`"
         variant="none"
         class="text-left d-flex"
       >
-        <b-icon icon="gear-fill" class="mr-2"></b-icon>
-        <span class="mr-auto">Settings</span>
+        <b-icon :icon="layout.buttonIcon" class="mr-2"></b-icon>
+        <span class="mr-auto">{{ layout.buttonTittle }}</span>
       </b-button>
-      <b-collapse id="setting-list">
+      <b-collapse :id="`${index}`">
         <ul>
-          <router-link :to="{name: 'Home'}"> <li> Users</li></router-link>
-          <router-link :to="{ name: 'Product' }"><li>Products</li></router-link>
+          <li v-for="(attr, index) in layout.attrs" :key="index">
+            <router-link :to="{ name: attr.linkTo }">{{
+              attr.linkTittle
+            }}</router-link>
+          </li>
         </ul>
       </b-collapse>
-      <b-button block variant="none" class="text-left">
-        <b-icon icon="calculator" aria-hidden="true" class="mr-1"></b-icon>
-        Manage
-      </b-button>
     </div>
   </nav>
 </template>
@@ -30,7 +29,31 @@
 import { mapState } from "vuex";
 export default {
   data() {
-    return {};
+    return {
+      layouts: [
+        {
+          buttonIcon: "gear-fill",
+          buttonTittle: "Settings",
+          attrs: [
+            {
+              linkTo: "Home",
+              linkTittle: "Users",
+            },
+            {
+              linkTo: "Product",
+              linkTittle: "Products",
+            }
+          ],
+        },
+        {
+          buttonIcon: "calculator-fill",
+          buttonTittle: "Manage",
+          attrs: [
+            
+          ],
+        }
+      ],
+    };
   },
   computed: {
     ...mapState(["products"]),
