@@ -1,6 +1,5 @@
 <template>
   <div id="create-user">
-    {{ newUser }}
     <form @submit.prevent="addUser">
       <b-row>
         <b-col
@@ -18,7 +17,7 @@
               :placeholder="attr.placeholder"
               :disabled="attr.disabled"
               v-model="$v.model[attr.model].$model"
-              :state="attr.vadiation ? validateState(`${attr.id}`) : ''"
+              :state="attr.validation ? validateState(`${attr.id}`) : null"
             ></b-form-input>
             <b-form-invalid-feedback>{{
               layout.invalidFeedback
@@ -52,7 +51,7 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import { validationMixin } from "vuelidate";
-import { required } from "vuelidate/lib/validators";
+import { required, minLength } from "vuelidate/lib/validators";
 export default {
   mixins: [validationMixin],
   data() {
@@ -62,15 +61,15 @@ export default {
           cols: "6",
           type: "input",
           label: "User name",
-          invalidFeedback: "hey hey hey",
-
+          invalidFeedback:
+            "This field is required and must be at least 3 characters",
           attrs: [
             {
               id: "userName",
               classes: [],
               placeholder: "Enter your username",
               model: "userName",
-              vadiation: true,
+              validation: true,
             },
           ],
         },
@@ -81,12 +80,14 @@ export default {
           cols: "6",
           type: "input",
           label: "First name",
+          invalidFeedback: "This field is required",
           attrs: [
             {
               id: "first",
               classes: [],
               placeholder: "Enter your first name",
               model: "first",
+              validation: true,
             },
           ],
         },
@@ -94,12 +95,14 @@ export default {
           cols: "6",
           type: "input",
           label: "Last name",
+          invalidFeedback: "This field is required",
           attrs: [
             {
-              id: "lastName",
+              id: "last",
               classes: [],
               placeholder: "Enter your last name",
               model: "last",
+              validation: true,
             },
           ],
         },
@@ -140,20 +143,17 @@ export default {
   },
   methods: {
     ...mapMutations(["ADD_USER"]),
-    validateState(userName) {
-      console.log(userName);
-      const { $dirty, $error } = this.$v.model[userName];
-      console.log($dirty);
-      console.log($error);
+    validateState(field) {
+      const { $dirty, $error } = this.$v.model[field];
       return $dirty ? !$error : null;
     },
     addUser: function() {
       this.$v.model.$touch();
 
       if (!this.$v.model.$anyError) {
+        console.log("you've passed");
         return;
       }
-      console.log("You've passed!");
     },
     getFormattedDate() {
       var date = new Date();
@@ -178,6 +178,7 @@ export default {
     model: {
       userName: {
         required,
+        minLength: minLength(3),
       },
       first: {
         required,

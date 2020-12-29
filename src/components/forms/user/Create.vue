@@ -1,127 +1,127 @@
 <template>
-  <div id="create-user">{{getID}}
+  <div id="create-user">{{newUser}}
     <form @submit.prevent="addUser">
-      <b-row>
-        <b-col cols="6">
-          <b-form-group
-            id="fieldset-1"
-            label="Tên đăng nhập"
-            label-for="input-1"
-          >
-            <b-form-input
-              id="userName"
-              placeholder="Nhập tên"
-              v-model.trim="$v.newUser.userName.$model"
-              :class="{
-                'is-invalid': $v.newUser.userName.$error,
-                'is-valid': !$v.newUser.userName.$invalid,
-              }"
-            ></b-form-input>
-            <p
-              class="invalid-feedback text-danger"
-              v-if="!$v.newUser.userName.required"
-            >
-              Username cannot be blank!
-            </p>
-            <p
-              class="invalid-feedback text-danger"
-              v-if="!$v.newUser.userName.minLength"
-            >
-              Username must greater than
-              {{ $v.newUser.userName.$params.minLength.min }} characters!
-            </p>
-          </b-form-group>
-        </b-col>
-        <b-col cols="6"></b-col>
-        <b-col cols="6"
-          ><b-form-group
-            id="fieldset-1"
-            label="Tên nhân viên"
-            label-for="input-1"
-          >
-            <b-form-input
-              placeholder="Nhập tên"
-              v-model.trim="$v.newUser.name.first.$model"
-              :class="{
-                'is-invalid': $v.newUser.name.first.$error,
-                'is-valid': !$v.newUser.name.first.$invalid,
-              }"
-            ></b-form-input>
-            <p
-              class="invalid-feedback text-danger"
-              v-if="!$v.newUser.name.first.required"
-            >
-              First name cannot be blank!
-            </p>
-          </b-form-group></b-col
-        >
-        <b-col cols="6"
-          ><b-form-group
-            id="fieldset-1"
-            label="Họ nhân viên"
-            label-for="input-1"
-          >
-            <b-form-input
-              id="userName"
-              placeholder="Nhập họ"
-              v-model.trim="$v.newUser.name.last.$model"
-              :class="{
-                'is-invalid': $v.newUser.name.last.$error,
-                'is-valid': !$v.newUser.name.last.$invalid,
-              }"
-            ></b-form-input>
-            <p
-              class="invalid-feedback text-danger"
-              v-if="!$v.newUser.name.last.required"
-            >
-              Last name cannot be blank!
-            </p>
-          </b-form-group></b-col
-        >
-        <b-col cols="6">
-          <b-form-checkbox v-model="newUser.status">
-            Trạng thái
-          </b-form-checkbox>
-        </b-col>
-        <b-col cols="12" class="d-flex">
-          <b-form-group class="mr-3 ml-auto">
-              <b-button type="submit" block variant="success"
-                >Submit</b-button
-            >
-          </b-form-group>
-          <b-form-group>
-            <router-link to="/"
-              ><b-button  block variant="success">Cancel</b-button></router-link
-            >
-          </b-form-group>
-        </b-col>
-      </b-row>
+      <Form :layouts="layouts" :model="model"/>
     </form>
   </div>
 </template>
 <script>
+import Form from "@/elements/form";
 import { mapGetters, mapMutations } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
-      newUser: {
-        id: this.getID,
-        name: { first: "", last: "" },
-        userName: "",
-        createdDate: this.getFormattedDate(),
+      layouts: [
+        {
+          cols: "6",
+          type: "input",
+          label: "User name",
+          invalidFeedback:
+            "This field is required and must be at least 3 characters",
+          attrs: [
+            {
+              id: "userName",
+              classes: [],
+              placeholder: "Enter your username",
+              model: "userName",
+              validation: true,
+            },
+          ],
+        },
+        {
+          cols: "6",
+        },
+        {
+          cols: "6",
+          type: "input",
+          label: "First name",
+          invalidFeedback: "This field is required",
+          attrs: [
+            {
+              id: "first",
+              classes: [],
+              placeholder: "Enter your first name",
+              model: "first",
+              validation: true,
+            },
+          ],
+        },
+        {
+          cols: "6",
+          type: "input",
+          label: "Last name",
+          invalidFeedback: "This field is required",
+          attrs: [
+            {
+              id: "last",
+              classes: [],
+              placeholder: "Enter your last name",
+              model: "last",
+              validation: true,
+            },
+          ],
+        },
+        {
+          cols: "6",
+          type: "checkbox",
+          attrs: [
+            {
+              label: "Status",
+              model: "status",
+            },
+          ],
+        },
+        {
+
+          cols: "6",
+          type: "button",
+          classes: ["d-flex", "flex-row-reverse"],
+          attrs: [
+            {
+              type: 'submit',
+              variant: "success",
+              label: "Submit",
+              classes: ["mr-3"],
+            },
+            {
+              variant: "success",
+              label: "Cancel",
+              to: 'Home'
+            },
+          ],
+        },
+      ],
+      model: {
+        userName: null,
+        first: null,
+        last: null,
         status: false,
       },
     };
   },
-
+  validations: {
+    model: {
+      userName: {
+        required,
+        minLength: minLength(3),
+      },
+      first: {
+        required,
+      },
+      last: {
+        required,
+      },
+    },
+  },
   methods: {
     ...mapMutations(["ADD_USER"]),
+
     addUser: function() {
-      this.$v.$touch();
-      if (!this.$v.$invalid) {
-        this.ADD_USER(this.newUser);
-        this.$router.replace("/")
+      this.$v.model.$touch();
+
+      if (!this.$v.model.$anyError) {
+        return;
       }
     },
     getFormattedDate() {
@@ -143,29 +143,24 @@ export default {
       return str;
     },
   },
-  validations: {
-    newUser: {
-      name: {
-        first: {
-          required,
-        },
-        last: {
-          required,
-        },
-      },
-      userName: {
-        required,
-        minLength: minLength(3),
-      },
+  computed: {
+    ...mapGetters(["getAllUsers"]),
+    getID() {
+      const id = this.getAllUsers.items.length + 1;
+      return id;
+    },
+    newUser() {
+      let newUser = {
+        userName: this.model.userName,
+        name: { first: this.model.first, last: this.model.last },
+        status: this.model.status,
+      };
+      return newUser;
     },
   },
-  computed: {
-    ...mapGetters(['getAllUsers']),
-    getID(){
-      const id = this.getAllUsers.items.length + 1;
-      return id
-    }
-  }
+  components: {
+    Form,
+  },
 };
 </script>
 <style lang="scss" scope="this api replaced by slot-scope in 2.5.0+">
