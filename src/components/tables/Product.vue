@@ -10,7 +10,7 @@
     >
       <template #cell(id)="data">
         <router-link :to="{ name: 'EditProduct', params: { id: data.value } }">
-          <i class="fas fa-edit" style="font-weight: bold; color: #42b983;"></i>
+          <i class="fas fa-th-large ml-3" style="font-weight: bold; color: #42b983;"></i>
         </router-link> </template
     ></Table>
   </div>

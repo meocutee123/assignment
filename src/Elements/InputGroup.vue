@@ -1,7 +1,7 @@
 <template>
   <b-row>
     <b-col
-      v-for="(layout, index) in layouts"
+      v-for="(layout, index) in formLayout"
       :key="index"
       :cols="layout.cols"
       :class="layout.classes"
@@ -26,21 +26,23 @@
           {{ layout.attrs.label }}
         </b-form-checkbox>
       </b-form-group>
-      <b-form-group v-if="layout.type == 'button'">
-        <b-button
+      <b-form-group v-if="layout.type == 'radio'">
+        <b-form-checkbox
           v-bind="layout.attrs"
-          @click="layout.attrs.clickable ? layout.attrs.click : null"
-          >{{ layout.attrs.label }}</b-button
+          v-model="model[layout.attrs.model]"
         >
+          {{ layout.attrs.label }}
+        </b-form-checkbox>
       </b-form-group>
     </b-col>
+    <slot/>
   </b-row>
 </template>
 <script>
 import { validationMixin } from "vuelidate";
 export default {
   mixins: [validationMixin],
-  props: ["layouts", "model"],
+  props: ["formLayout", "model"],
   inject: ["$v"],
   methods: {
     validateState(field) {
