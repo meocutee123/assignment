@@ -8,37 +8,29 @@
     >
       <b-form-group v-if="layout.type == 'input'" :label="layout.label">
         <b-form-input
-          v-for="(attr, index) in layout.attrs"
-          :key="index"
-          :id="attr.id"
-          :class="attr.classes"
-          :placeholder="attr.placeholder"
-          :disabled="attr.disabled"
-          v-model="model[attr.model]"
+          v-bind="layout.attrs"
+          v-model="$v.model[layout.attrs.model].$model"
+          :state="
+            layout.attrs.validation ? validateState(`${layout.attrs.id}`) : null
+          "
         ></b-form-input>
         <b-form-invalid-feedback>{{
-          layout.invalidFeedback
+          layout.attrs.invalidFeedback
         }}</b-form-invalid-feedback>
       </b-form-group>
       <b-form-group v-if="layout.type == 'checkbox'">
         <b-form-checkbox
-          v-for="(attr, index) in layout.attrs"
-          :key="index"
-          :class="attr.classes"
-          v-model="model[attr.model]"
+          v-bind="layout.attrs"
+          v-model="model[layout.attrs.model]"
         >
-          {{ attr.label }}
+          {{ layout.attrs.label }}
         </b-form-checkbox>
       </b-form-group>
       <b-form-group v-if="layout.type == 'button'">
         <b-button
-          v-for="(attr, index) in layout.attrs"
-          :key="index"
-          :type="attr.type"
-          :to="{ name: attr.to }"
-          :variant="attr.variant"
-          :class="attr.classes"
-          >{{ attr.label }}</b-button
+          v-bind="layout.attrs"
+          @click="layout.attrs.clickable ? layout.attrs.click : null"
+          >{{ layout.attrs.label }}</b-button
         >
       </b-form-group>
     </b-col>
@@ -48,15 +40,13 @@
 import { validationMixin } from "vuelidate";
 export default {
   mixins: [validationMixin],
-  props: {
-    layouts: {
-      type: Array,
-      required: true,
-    },
-    model: {
-      type: Object,
-      required: true,
-    },
+  props: ["layouts", "model"],
+  inject: ["$v"],
+  methods: {
+    validateState(field) {
+      const { $dirty, $error } = this.$v.model[field];
+      return $dirty ? !$error : null;
+    }
   },
 };
 </script>

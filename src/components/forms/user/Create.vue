@@ -1,7 +1,7 @@
 <template>
-  <div id="create-user">{{newUser}}
+  <div id="create-user">
     <form @submit.prevent="addUser">
-      <Form :layouts="layouts" :model="model"/>
+      <Form :layouts="layouts" :model="model" />
     </form>
   </div>
 </template>
@@ -9,7 +9,9 @@
 import Form from "@/elements/form";
 import { mapGetters, mapMutations } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
+import mixins from "@/mixins/index.js";
 export default {
+  mixins: [mixins],
   data() {
     return {
       layouts: [
@@ -17,17 +19,15 @@ export default {
           cols: "6",
           type: "input",
           label: "User name",
-          invalidFeedback:
-            "This field is required and must be at least 3 characters",
-          attrs: [
-            {
-              id: "userName",
-              classes: [],
-              placeholder: "Enter your username",
-              model: "userName",
-              validation: true,
-            },
-          ],
+          attrs: {
+            id: "userName",
+            class: [],
+            placeholder: "Enter your username",
+            model: "userName",
+            validation: true,
+            invalidFeedback:
+              "This field is required and must be at least 3 characters",
+          },
         },
         {
           cols: "6",
@@ -37,59 +37,61 @@ export default {
           type: "input",
           label: "First name",
           invalidFeedback: "This field is required",
-          attrs: [
-            {
-              id: "first",
-              classes: [],
-              placeholder: "Enter your first name",
-              model: "first",
-              validation: true,
-            },
-          ],
+          attrs: {
+            id: "first",
+            classes: [],
+            placeholder: "Enter your first name",
+            model: "first",
+            validation: true,
+          },
         },
         {
           cols: "6",
           type: "input",
           label: "Last name",
           invalidFeedback: "This field is required",
-          attrs: [
-            {
-              id: "last",
-              classes: [],
-              placeholder: "Enter your last name",
-              model: "last",
-              validation: true,
-            },
-          ],
+          attrs: {
+            id: "last",
+            classes: [],
+            placeholder: "Enter your last name",
+            model: "last",
+            validation: true,
+          },
         },
         {
           cols: "6",
           type: "checkbox",
-          attrs: [
-            {
-              label: "Status",
-              model: "status",
-            },
-          ],
+          attrs: {
+            label: "Status",
+            model: "status",
+          },
         },
         {
-
           cols: "6",
           type: "button",
           classes: ["d-flex", "flex-row-reverse"],
-          attrs: [
-            {
-              type: 'submit',
-              variant: "success",
-              label: "Submit",
-              classes: ["mr-3"],
-            },
-            {
-              variant: "success",
-              label: "Cancel",
-              to: 'Home'
-            },
-          ],
+          // attrs: [
+          //   {
+          //     type: 'submit',
+          //     variant: "success",
+          //     label: "Submit",
+          //     class: ["mr-3"],
+          //   },
+          //   {
+          //     variant: "success",
+          //     label: "Cancel",
+          //     to: { name: "Home" }
+          //   },
+          // ],
+          attrs: {
+            type: "submit",
+            variant: "success",
+            label: "Submit",
+            class: ["mr-3"],
+            clickable: true,
+            click: () => console.log('foo sadfhsdakjf'),
+            
+          },
         },
       ],
       model: {
@@ -114,6 +116,11 @@ export default {
       },
     },
   },
+  provide() {
+    return {
+      $v: this.$v,
+    };
+  },
   methods: {
     ...mapMutations(["ADD_USER"]),
 
@@ -121,26 +128,11 @@ export default {
       this.$v.model.$touch();
 
       if (!this.$v.model.$anyError) {
+        // this.ADD_USER(this.newUser);
+        // this.$router.push({ name: "Home" });
+        console.log("foo");
         return;
       }
-    },
-    getFormattedDate() {
-      var date = new Date();
-      var str =
-        date.getMonth() +
-        1 +
-        "/" +
-        date.getDate() +
-        "/" +
-        date.getFullYear() +
-        ", " +
-        date.getHours() +
-        ":" +
-        date.getMinutes() +
-        ":" +
-        date.getSeconds() +
-        `${+date.getHours() > 12 ? " PM" : " AM"}`;
-      return str;
     },
   },
   computed: {
@@ -151,8 +143,10 @@ export default {
     },
     newUser() {
       let newUser = {
+        id: this.getID,
         userName: this.model.userName,
         name: { first: this.model.first, last: this.model.last },
+        createdDate: this.getFormattedDate(),
         status: this.model.status,
       };
       return newUser;
@@ -163,7 +157,7 @@ export default {
   },
 };
 </script>
-<style lang="scss" scope="this api replaced by slot-scope in 2.5.0+">
+<style lang="scss" scope>
 form {
   padding: 20px;
   margin: 20px;

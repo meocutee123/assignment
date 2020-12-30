@@ -1,5 +1,6 @@
 <template>
-  <div id="create-product">{{product}}
+  <div id="create-product">
+    {{ product }}
     <form action="" @submit.prevent="update">
       <b-row>
         <b-col cols="6">
@@ -27,7 +28,7 @@
               id="userName"
               placeholder="Nhập giá sản phẩm"
               type="text"
-             v-model="product.price"/></b-form-group
+              v-model="product.price"/></b-form-group
         ></b-col>
         <b-col cols="12">
           <div class="form-check">
@@ -69,8 +70,12 @@ export default {
       },
     };
   },
-    mounted() {
-    this.product = Object.assign({}, this.product, JSON.parse(JSON.stringify(this.currentProduct)));
+  mounted() {
+    this.product = Object.assign(
+      {},
+      this.product,
+      JSON.parse(JSON.stringify(this.currentProduct))
+    );
   },
   methods: {
     ...mapActions(["LOAD_PRODUCT"]),
