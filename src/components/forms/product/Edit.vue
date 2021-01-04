@@ -13,27 +13,33 @@ import ButtonGroup from "@/elements/ButtonGroup";
 import mixins from "@/mixins/index.js";
 import Edit from "./Edit.js";
 import { mapActions } from "vuex";
-import { required} from "vuelidate/lib/validators";
+import { required } from "vuelidate/lib/validators";
 export default {
   props: ["id"],
   mixins: [mixins],
   data() {
     return {
       formLayout: Edit.formLayout,
-      buttonGroup: Edit.buttonGroup,
+      buttonGroup: [
+        {
+          type: "submit",
+          class: "mr-3",
+          variant: "success",
+          label: "Submit",
+        },
+        {
+          class: "mr-3",
+          variant: "success",
+          label: "Cancel",
+          to: "/product",
+        },
+      ],
       model: {
-        productName: null,
-        price: null,
-        status: false,
-      },
-      product: {
-        productName: '',
-        price: "",
-        status: "",
+        current: this.getFormattedDate(),
       },
     };
   },
-    validations: {
+  validations: {
     model: {
       productName: {
         required,
@@ -44,9 +50,9 @@ export default {
     },
   },
   mounted() {
-    this.product = Object.assign(
+    this.model = Object.assign(
       {},
-      this.product,
+      this.model,
       JSON.parse(JSON.stringify(this.currentProduct))
     );
   },
@@ -56,7 +62,7 @@ export default {
     update() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        this.$store.dispatch("UPDATE_PRODUCT", this.product);
+        this.$store.dispatch("UPDATE_PRODUCT", this.model);
         this.$router.replace("/product");
       }
     },

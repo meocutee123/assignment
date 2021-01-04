@@ -11,7 +11,6 @@ const getters = {
 const mutations = {
   LOAD_USER: (state, id) => {
     state.currentUser = users.items.find((user) => user.id == id);
-    console.log(state.currentUser);
   },
   ADD_USER: (state, user) => {
     state.users.items.push(user);

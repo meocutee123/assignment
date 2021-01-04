@@ -8,7 +8,7 @@
       :perPage="perPage"
       :pageOptions="pageOptions"
     >
-      <template #cell(id)="data">
+      <template  #cell(id)="data">
         <router-link :to="{name: 'Edit', params: {id: data.value}}">
           <i class="fas fa-edit ml-3" style="font-weight: bold; color: #42b983;"></i>
         </router-link>
@@ -54,10 +54,7 @@ export default {
             return "Nghỉ việc";
           },
         },
-        {
-          label: "Thao tác",
-          key: "id",
-        },
+
       ],
       pageOptions: [20, 50, 100, { value: 1000, text: "Show all" }],
       perPage: 20,

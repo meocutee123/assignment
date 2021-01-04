@@ -1,5 +1,5 @@
 <template>
-  <div id="create-product">{{newProduct}}
+  <div id="create-product">
     <form @submit.prevent="addProduct">
       <InputGroup :formLayout="formLayout" :model="model">
         <ButtonGroup :attrs="buttonGroup" />
@@ -19,7 +19,20 @@ export default {
   data() {
     return {
       formLayout: Create.formLayout,
-      buttonGroup: Create.buttonGroup,
+      buttonGroup: [
+        {
+          type: "submit",
+          class: "mr-3",
+          variant: "success",
+          label: "Submit",
+        },
+        {
+          class: "mr-3",
+          variant: "success",
+          label: "Cancel",
+          to: "/product",
+        },
+      ],
       model: {
         productName: null,
         price: null,
@@ -35,7 +48,7 @@ export default {
         this.ADD_PRODUCT(this.newProduct);
         this.$router.push({ name: "Product" });
       }
-    }
+    },
   },
   validations: {
     model: {
@@ -52,7 +65,7 @@ export default {
     newProduct() {
       let newProduct = {
         id: this.getID,
-        name: this.model.productName,
+        productName: this.model.productName,
         price: this.model.price,
         createdDate: this.getFormattedDate(),
         updatedDate: this.getFormattedDate(),

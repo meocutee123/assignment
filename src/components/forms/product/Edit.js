@@ -16,13 +16,14 @@ export default {
         cols: "6",
         type: "input",
         label: "Price",
-        invalidFeedback: "This field is required",
         attrs: {
           id: "price",
           classes: [],
           placeholder: "Enter price",
           model: "price",
-         
+          validation: true,
+          invalidFeedback:
+            "This field is required and must be at least 3 characters",
         },
       },
       {
@@ -34,19 +35,6 @@ export default {
         },
       },
     ],
-    buttonGroup: [
-      {
-        type: "submit",
-        class: "mr-3",
-        variant: "success",
-        label: "Submit",
-      },
-      {
-        class: "mr-3",
-        variant: "success",
-        label: "Cancel",
-        to: "/product",
-      },
-    ],
+    
   };
   

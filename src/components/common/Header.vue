@@ -2,7 +2,7 @@
   <div class="user fixed-top">
     <b-dropdown id="dropdown-1" right text="User" variant="none">
       <template #button-content>
-        <b-avatar src="@/assets/person.png"></b-avatar> Settings
+        <b-avatar src="@/assets/person.png"></b-avatar> <span v-if="isAuth">{{isAuth.name}}</span>
       </template>
       <template #avatar></template>
       <router-link to="/profile">
@@ -13,13 +13,15 @@
   </div>
 </template>
 <script>
+import isAuth from '@/mixins/auth.js'
 export default {
+  mixins: [isAuth],
   data() {
     return {};
   },
   methods: {
     logout() {
-      sessionStorage.removeItem("auth");
+      localStorage.removeItem("auth");
       this.$router.replace("/login");
     },
   },

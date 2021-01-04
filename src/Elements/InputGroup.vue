@@ -35,7 +35,7 @@
         </b-form-checkbox>
       </b-form-group>
     </b-col>
-    <slot/>
+    <slot />
   </b-row>
 </template>
 <script>
@@ -48,7 +48,7 @@ export default {
     validateState(field) {
       const { $dirty, $error } = this.$v.model[field];
       return $dirty ? !$error : null;
-    }
+    },
   },
 };
 </script>

@@ -8,6 +8,9 @@
         tag="article"
         class="login-form"
       >
+        <span >
+          {{ warn }}
+        </span>
         <b-form-group label="Tên đăng nhập">
           <b-form-input
             id="userName"
@@ -56,17 +59,34 @@ export default {
     return {
       userName: "",
       password: "",
+      warn: "",
     };
   },
   methods: {
     submit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        if (this.userName == "admin" && this.password == '123') {
-          sessionStorage.setItem("auth", true);
+        if (this.userName == "admin" && this.password == "123") {
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              name: "Admin",
+              role: "admin",
+            })
+          );
           this.$router.replace("/");
-        }else{
-          console.log("Username or password is incorrect");
+        } else if (this.userName == "user" && this.password == "123") {
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({
+              name: "User",
+              role: "user",
+            })
+          );
+          this.$router.replace("/");
+        } else {
+          this.warn = "User name or password is incorrect!";
+          console.log(this.warn);
         }
       }
     },

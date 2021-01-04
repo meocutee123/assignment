@@ -51,9 +51,7 @@
           show-empty
         >
           <template v-slot:cell(id)="data">
-            <slot name="cell(id)" v-bind="data">
-            
-            </slot>
+            <slot name="cell(id)" v-bind="data"> </slot>
           </template>
         </b-table>
       </b-col>
@@ -73,7 +71,9 @@
 </template>
 
 <script>
+import isAuth from "@/mixins/auth.js";
 export default {
+  mixins: [isAuth],
   props: {
     title: { type: Object, required: true },
     linkTo: { type: String, required: true },
@@ -103,6 +103,11 @@ export default {
   mounted() {
     this.totalRows = this.items.length;
   },
+  computed: {
+      // this.fields = this.fields.filter(function(obj) {
+      //   return obj.label !== "Thao tác";
+      // });
+  },
 };
 </script>
 
@@ -122,3 +127,4 @@ export default {
   }
 }
 </style>
+[]

@@ -20,6 +20,7 @@ const mutations = {
       (item) => item.id == product.id
     );
     whatToUpdate.price = product.price;
+    whatToUpdate.updatedDate = product.current;
     whatToUpdate.status = product.status;
   },
 };

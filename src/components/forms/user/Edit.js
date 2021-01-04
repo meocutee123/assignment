@@ -9,9 +9,7 @@ export default {
         class: [],
         placeholder: "Enter your username",
         model: "userName",
-        validation: true,
-        invalidFeedback:
-          "This field is required and must be at least 3 characters",
+        disabled: true,
       },
     },
     {
@@ -25,9 +23,9 @@ export default {
         id: "first",
         classes: [],
         placeholder: "Enter your first name",
+        validation: true,
         invalidFeedback: "This field is required",
         model: "first",
-        validation: true,
       },
     },
     {
@@ -38,9 +36,9 @@ export default {
         id: "last",
         classes: [],
         placeholder: "Enter your last name",
-        model: "last",
         validation: true,
         invalidFeedback: "This field is required",
+        model: "last",
       },
     },
     {

@@ -30,7 +30,7 @@ export default {
         {
           // A column that needs custom formatting,
           // calling formatter 'fullName' in this app
-          key: "name",
+          key: "productName",
           label: "Tên sản phẩm",
         },
         {
@@ -46,7 +46,7 @@ export default {
           key: "price",
         },
         {
-          label: "product",
+          label: "Trạng thái",
           key: "status",
           formatter: (value, key, item) => {
             if (item.status) {
@@ -54,10 +54,6 @@ export default {
             }
             return "Không hoạt động";
           },
-        },
-        {
-          label: "Thao tác",
-          key: "id",
         },
       ],
       pageOptions: [20, 50, 100, { value: 1000, text: "Show all" }],
