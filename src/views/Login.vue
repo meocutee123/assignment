@@ -8,7 +8,7 @@
         tag="article"
         class="login-form"
       >
-        <span >
+        <span class="text-danger font-weight-bold">
           {{ warn }}
         </span>
         <b-form-group label="Tên đăng nhập">
@@ -32,6 +32,7 @@
           <b-form-input
             placeholder="Nhập mật khẩu"
             v-model.trim="$v.password.$model"
+            type="password"
             :class="{
               'is-invalid': $v.password.$error,
               'is-valid': !$v.password.$invalid,

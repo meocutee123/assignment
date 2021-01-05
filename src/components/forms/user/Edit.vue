@@ -1,5 +1,5 @@
 <template>
-  <div id="create-user">{{model}}
+  <div id="create-user">
     <form action="" @submit.prevent="update">
       <InputGroup :formLayout="formLayout" :model="model">
         <ButtonGroup :attrs="buttonGroup" />
