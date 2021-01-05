@@ -28,3 +28,8 @@ export default {
     }
 }
 </script>
+<style lang="scss">
+  .content{
+    padding-top: 80px;
+  }
+</style>

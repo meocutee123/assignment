@@ -15,6 +15,7 @@
           <b-form-input
             id="userName"
             placeholder="Nhập đăng nhập"
+            autocomplete="on"
             v-model.trim="$v.userName.$model"
             :class="{
               'is-invalid': $v.userName.$error,
@@ -32,6 +33,7 @@
           <b-form-input
             placeholder="Nhập mật khẩu"
             v-model.trim="$v.password.$model"
+            autocomplete="on"
             type="password"
             :class="{
               'is-invalid': $v.password.$error,
@@ -75,7 +77,8 @@ export default {
               role: "admin",
             })
           );
-          this.$router.replace("/");
+          this.$router.push(sessionStorage.getItem("redirectPath") || "/");
+          sessionStorage.removeItem("redirectPath");
         } else if (this.userName == "user" && this.password == "123") {
           localStorage.setItem(
             "auth",
@@ -84,7 +87,8 @@ export default {
               role: "user",
             })
           );
-          this.$router.replace("/");
+          this.$router.push(sessionStorage.getItem("redirectPath") || "/");
+          sessionStorage.removeItem("redirectPath");
         } else {
           this.warn = "User name or password is incorrect!";
           console.log(this.warn);
@@ -103,7 +107,7 @@ export default {
   },
 };
 </script>
-<style lang="scss" scope>
+<style lang="scss" scoped>
 form {
   width: 400px;
   position: absolute;

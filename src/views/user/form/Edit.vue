@@ -100,7 +100,7 @@ export default {
   },
 };
 </script>
-<style lang="scss" scope>
+<style lang="scss" scoped>
 form {
   padding: 20px;
   margin: 20px;

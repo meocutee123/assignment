@@ -13,11 +13,9 @@ const routes = [
     children: [
       {
         path: "",
-        name: 'Home',
+        name: "Home",
         component: () =>
-          import(
-            /* webpackChunkName: "table" */ "@/components/tables/User.vue"
-          ),
+          import(/* webpackChunkName: "table" */ "@/views/user/list/User.vue"),
         props: true,
       },
       {
@@ -25,16 +23,14 @@ const routes = [
         name: "Create",
         component: () =>
           import(
-            /* webpackChunkName: "create" */ "@/components/forms/user/Create.vue"
+            /* webpackChunkName: "create" */ "@/views/user/form/Create.vue"
           ),
       },
       {
         path: "user/:id/edit",
         name: "Edit",
         component: () =>
-          import(
-            /* webpackChunkName: "edit" */ "@/components/forms/user/Edit.vue"
-          ),
+          import(/* webpackChunkName: "edit" */ "@/views/user/form/Edit.vue"),
         props: true,
       },
       {
@@ -42,7 +38,7 @@ const routes = [
         name: "Product",
         component: () =>
           import(
-            /* webpackChunkName: "product" */ "@/components/tables/Product.vue"
+            /* webpackChunkName: "product" */ "@/views/product/list/Product.vue"
           ),
         props: true,
       },
@@ -51,7 +47,7 @@ const routes = [
         name: "CreateProduct",
         component: () =>
           import(
-            /* webpackChunkName: "createProduct" */ "@/components/forms/product/Create.vue"
+            /* webpackChunkName: "createProduct" */ "@/views/product/form/Create.vue"
           ),
       },
       {
@@ -59,23 +55,18 @@ const routes = [
         name: "EditProduct",
         component: () =>
           import(
-            /* webpackChunkName: "editProduct" */ "@/components/forms/product/Edit.vue"
+            /* webpackChunkName: "editProduct" */ "@/views/product/form/Edit.vue"
           ),
         props: true,
-      },
-      {
-        path: "/test",
-        name: "test",
-        meta: { layout: "blank" },
-        component: () =>
-          import(/* webpackChunkName: "notFound" */ "@/views/test"),
       },
     ],
   },
   {
     path: "/login",
     name: "Login",
-    meta: { layout: "blank" },
+    meta: {
+      layout: "blank",
+    },
     component: () =>
       import(/* webpackChunkName: "login" */ "@/views/Login.vue"),
   },
@@ -96,8 +87,14 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   let isAuth = localStorage.getItem("auth");
-  if (to.name !== "Login" && !isAuth) next({ name: "Login" });
-  else next();
+  if (to.name !== "Login" && !isAuth) {
+    sessionStorage.setItem("redirectPath", to.path);
+    next({ name: "Login" });
+  } else next();
+
+  if(isAuth && to.path =='/login'){
+    next(from.path)
+  }
 });
 
 export default router;

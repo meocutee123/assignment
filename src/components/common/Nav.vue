@@ -45,26 +45,27 @@ export default {
               linkTo: "Product",
               linkTittle: "Products",
             },
-           
           ],
         },
-
       ],
     };
   },
   mounted() {
-    if (this.isAuth.role == "admin") {
-      this.autoRun();
+    if (this.isAuth) {
+      if (this.isAuth.role == "admin") {
+        this.autoRun();
+      }
     }
   },
   methods: {
     autoRun() {
-      this.layouts.push(        {
-          buttonIcon: "calculator-fill",
-          buttonTittle: "Manage",
-          attrs: [],
-        },);
-    },
+      this.layouts.push({
+        buttonIcon: "calculator-fill",
+        buttonTittle: "Manage",
+        attrs: [],
+      });
+    }
+
   },
   computed: {
     ...mapState(["products"]),

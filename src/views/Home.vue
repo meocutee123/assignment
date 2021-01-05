@@ -14,7 +14,7 @@ export default {
   name: "home",
 };
 </script>
-<style lang="scss" scope>
+<style lang="scss" scoped>
 .content{
     margin-top: 70px;
 }
