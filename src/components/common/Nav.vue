@@ -27,7 +27,9 @@
 </template>
 <script>
 import { mapState } from "vuex";
+import isAuth from "@/mixins/auth.js";
 export default {
+  mixins: [isAuth],
   data() {
     return {
       layouts: [
@@ -42,18 +44,27 @@ export default {
             {
               linkTo: "Product",
               linkTittle: "Products",
-            }
+            },
+           
           ],
         },
-        {
-          buttonIcon: "calculator-fill",
-          buttonTittle: "Manage",
-          attrs: [
-            
-          ],
-        },
+
       ],
     };
+  },
+  mounted() {
+    if (this.isAuth.role == "admin") {
+      this.autoRun();
+    }
+  },
+  methods: {
+    autoRun() {
+      this.layouts.push(        {
+          buttonIcon: "calculator-fill",
+          buttonTittle: "Manage",
+          attrs: [],
+        },);
+    },
   },
   computed: {
     ...mapState(["products"]),

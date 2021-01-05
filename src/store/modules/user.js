@@ -20,6 +20,11 @@ const mutations = {
     whoToUpdate.name = user.name;
     whoToUpdate.status = user.status;
   },
+  REMOVE_USER: (state, user) => {
+    state.users.items.splice(state.users.items.findIndex(function(i){
+      return i.id == user
+    }), 1)
+  },
 };
 const actions = {
   LOAD_USER: (context, id) => {
@@ -28,6 +33,9 @@ const actions = {
   UPDATE_USER: (context, user) => {
     context.commit("UPDATE_USER", user);
   },
+  REMOVE_USER: (context, user) => {
+    context.commit('REMOVE_USER', user)
+  }
 };
 
 export default {

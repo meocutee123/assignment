@@ -23,6 +23,11 @@ const mutations = {
     whatToUpdate.updatedDate = product.current;
     whatToUpdate.status = product.status;
   },
+  REMOVE_PRODUCT: (state, product) => {
+    state.products.items.splice(state.products.items.findIndex(function(i){
+      return i.id == product
+    }), 1)
+  },
 };
 const actions = {
   LOAD_PRODUCT: (context, id) => {
@@ -31,6 +36,9 @@ const actions = {
   UPDATE_PRODUCT: (context, product) => {
     context.commit("UPDATE_PRODUCT", product);
   },
+  REMOVE_PRODUCT: (context, product) => {
+    context.commit('REMOVE_PRODUCT', product)
+  }
 };
 
 export default {

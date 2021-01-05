@@ -5,16 +5,6 @@ const isAuth = {
       return isAuth;
     },
   },
-  mounted(){
-    if(this.isAuth.role=='admin'){
-      this.fields.push(
-        {
-          label: "Thao tác",
-          key: "id",
-        },
-      )
-    }
-  },
 };
 
 export default isAuth;

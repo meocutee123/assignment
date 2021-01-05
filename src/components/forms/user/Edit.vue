@@ -1,5 +1,5 @@
 <template>
-  <div id="create-user">
+  <div id="create-user">{{model}}
     <form action="" @submit.prevent="update">
       <InputGroup :formLayout="formLayout" :model="model">
         <ButtonGroup :attrs="buttonGroup" />
@@ -63,9 +63,9 @@ export default {
     // }
     // a ? b : c
 
-    const { name = null, ...rest } = JSON.parse(JSON.stringify(this.currentUser));
+    const { name, ...rest } = JSON.parse(JSON.stringify(this.currentUser));
     let newCurrentUser = {
-      rest,
+      ...rest,
       ...name,
     };
     this.model = Object.assign({}, this.model, newCurrentUser);

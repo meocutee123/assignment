@@ -2,7 +2,7 @@
   <div id="list">
     <div class="header">
       <h3>{{ title.name }}</h3>
-      <router-link :to="{ name: linkTo }">
+      <router-link v-if="isAuth.role == 'admin'" :to="{ name: linkTo }">
         <b-button variant="success" size="sm">{{
           title.button
         }}</b-button></router-link
@@ -41,6 +41,9 @@
       </b-col>
       <b-col sm="12" md="12">
         <b-table
+          sticky-header="650px"
+          borderless
+          striped
           :items="items"
           :fields="fields"
           :current-page="currentPage"
@@ -99,24 +102,29 @@ export default {
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
+    autoRun() {
+      this.fields.push({
+        label: "Thao tác",
+        key: "id",
+      });
+    },
   },
   mounted() {
     this.totalRows = this.items.length;
+    if (this.isAuth.role == "admin") {
+      this.autoRun();
+    }
   },
-  computed: {
-      // this.fields = this.fields.filter(function(obj) {
-      //   return obj.label !== "Thao tác";
-      // });
-  },
+  computed: {},
 };
 </script>
 
-<style lang="scss" scope>
+<style lang="scss" scoped>
 #list {
   background-color: white;
   padding: 10px;
   margin: 0 10px;
-  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   .header {
     display: flex;
     justify-content: space-between;
@@ -127,4 +135,3 @@ export default {
   }
 }
 </style>
-[]
