@@ -36,10 +36,12 @@ export default {
         {
           buttonIcon: "gear-fill",
           buttonTittle: "Settings",
+          role: "admin",
           attrs: [
             {
               linkTo: "Home",
               linkTittle: "Users",
+              role: "admin",
             },
             {
               linkTo: "Product",
@@ -56,6 +58,32 @@ export default {
         this.autoRun();
       }
     }
+    var users = [
+      {
+        name: "John",
+        email: "johnson@mail.com",
+        age: 25,
+        address: "USA",
+        role: 'user'
+      },
+      {
+        name: "Tom",
+        email: "tom@mail.com",
+        age: 35,
+        address: "England",
+        role: 'user'
+      },
+      {
+        name: "Mark",
+        email: "mark@mail.com",
+        age: 28,
+        address: "England",
+      },
+    ];
+
+    const result = users.find(({address}) => address === 'England')
+    console.log(result);
+
   },
   methods: {
     autoRun() {
@@ -64,8 +92,7 @@ export default {
         buttonTittle: "Manage",
         attrs: [],
       });
-    }
-
+    },
   },
   computed: {
     ...mapState(["products"]),

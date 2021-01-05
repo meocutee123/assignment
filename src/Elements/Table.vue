@@ -41,7 +41,7 @@
       </b-col>
       <b-col sm="12" md="12">
         <b-table
-          sticky-header="650px"
+          sticky-header="60vh"
           borderless
           striped
           :items="items"

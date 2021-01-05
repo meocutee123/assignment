@@ -34,7 +34,6 @@
             placeholder="Nhập mật khẩu"
             v-model.trim="$v.password.$model"
             autocomplete="on"
-            type="password"
             :class="{
               'is-invalid': $v.password.$error,
               'is-valid': !$v.password.$invalid,

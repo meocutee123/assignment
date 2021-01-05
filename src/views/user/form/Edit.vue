@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import InputGroup from "@/elements/InputGroup";
+import InputGroup from "@/elements/InputGroup.vue";
 import ButtonGroup from "@/elements/ButtonGroup";
 import mixins from "@/mixins/index.js";
 import Edit from "./Edit.js";
@@ -59,7 +59,7 @@ export default {
     // }
     // onchange(value){
     //   const { id, asdas : { idd } = {}  }=value;
-      
+
     // }
     // a ? b : c
 
