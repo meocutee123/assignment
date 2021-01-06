@@ -31,5 +31,9 @@ export default {
 <style lang="scss">
   .content{
     padding-top: 80px;
+      .page-item.active .page-link {
+    background-color: #42b983 !important ;
+    border-color: #42b983 !important;
+  }
   }
 </style>

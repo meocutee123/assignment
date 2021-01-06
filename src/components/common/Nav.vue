@@ -3,19 +3,19 @@
     <div class="logo">
       <img src="@/assets/logo.png" alt="logo" />
     </div>
-    <div class="layout-menu" v-for="(layout, index) in layouts" :key="index">
+    <div class="nav-menu" v-for="(nav, index) in navLayout" :key="index">
       <b-button
         block
         v-b-toggle="`${index}`"
         variant="none"
         class="text-left d-flex"
       >
-        <b-icon :icon="layout.buttonIcon" class="mr-2"></b-icon>
-        <span class="mr-auto">{{ layout.buttonTittle }}</span>
+        <b-icon :icon="nav.buttonIcon" class="mr-2"></b-icon>
+        <span class="mr-auto">{{ nav.buttonTittle }}</span>
       </b-button>
       <b-collapse :id="`${index}`">
         <ul>
-          <li v-for="(attr, index) in layout.attrs" :key="index">
+          <li v-for="(attr, index) in nav.attrs" :key="index">
             <router-link :to="{ name: attr.linkTo }">{{
               attr.linkTittle
             }}</router-link>
@@ -28,72 +28,57 @@
 <script>
 import { mapState } from "vuex";
 import isAuth from "@/mixins/auth.js";
+import { navLayout } from "./nav.js";
 export default {
   mixins: [isAuth],
   data() {
     return {
-      layouts: [
-        {
-          buttonIcon: "gear-fill",
-          buttonTittle: "Settings",
-          role: "admin",
-          attrs: [
-            {
-              linkTo: "Home",
-              linkTittle: "Users",
-              role: "admin",
-            },
-            {
-              linkTo: "Product",
-              linkTittle: "Products",
-            },
-          ],
-        },
-      ],
+      navLayout: navLayout,
+      test: () =>{
+        let foo = {...navLayout}
+        return foo
+      }
     };
   },
   mounted() {
     if (this.isAuth) {
-      if (this.isAuth.role == "admin") {
-        this.autoRun();
+      var filters = {
+        role: this.isAuth.role,
+      };
+
+      for (var i = 0; i < this.navLayout.length; i++) {
+        this.navLayout[i].attrs = this.navLayout[i].attrs.filter(function(
+          item
+        ) {
+          for (var key in filters) {
+            if (item[key] === undefined) {
+              return false;
+            }
+            if (!item[key].includes(filters[key])) {
+              return false;
+            }
+          }
+          return true;
+        });
       }
-    }
-    var users = [
-      {
-        name: "John",
-        email: "johnson@mail.com",
-        age: 25,
-        address: "USA",
-        role: 'user'
-      },
-      {
-        name: "Tom",
-        email: "tom@mail.com",
-        age: 35,
-        address: "England",
-        role: 'user'
-      },
-      {
-        name: "Mark",
-        email: "mark@mail.com",
-        age: 28,
-        address: "England",
-      },
-    ];
 
-    const result = users.find(({address}) => address === 'England')
-    console.log(result);
-
-  },
-  methods: {
-    autoRun() {
-      this.layouts.push({
-        buttonIcon: "calculator-fill",
-        buttonTittle: "Manage",
-        attrs: [],
+      this.navLayout = this.navLayout.filter(function(item) {
+        for (var key in filters) {
+          if (item[key] === undefined) {
+            return false;
+          }
+          if (!item[key].includes(filters[key])) {
+            return false;
+          }
+        }
+        return true;
       });
-    },
+    }
   },
+  destroyed() {
+
+  },
+  methods: {},
   computed: {
     ...mapState(["products"]),
   },
@@ -118,7 +103,7 @@ nav {
       max-width: 100px;
     }
   }
-  .layout-menu {
+  .nav-menu {
     li {
       list-style: none;
       cursor: pointer;

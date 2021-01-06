@@ -129,9 +129,5 @@ export default {
     display: flex;
     justify-content: space-between;
   }
-  .page-item.active .page-link {
-    background-color: #42b983 !important;
-    border-color: #42b983 !important;
-  }
 }
 </style>
