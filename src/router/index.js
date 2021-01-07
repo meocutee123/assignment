@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 // import authRouter from './checkAuth.js'
-
+let isAuth = localStorage.getItem("auth");
 Vue.use(VueRouter);
 const routes = [
   {
@@ -14,6 +14,9 @@ const routes = [
       {
         path: "",
         name: "Home",
+        meta: {
+          role: ["admin"],
+        },
         component: () =>
           import(/* webpackChunkName: "table" */ "@/views/user/list/User.vue"),
         props: true,
@@ -21,6 +24,9 @@ const routes = [
       {
         path: "user/create",
         name: "Create",
+        meta: {
+          role: ["admin"],
+        },
         component: () =>
           import(
             /* webpackChunkName: "create" */ "@/views/user/form/Create.vue"
@@ -29,6 +35,9 @@ const routes = [
       {
         path: "user/:id/edit",
         name: "Edit",
+        meta: {
+          role: ["user"],
+        },
         component: () =>
           import(/* webpackChunkName: "edit" */ "@/views/user/form/Edit.vue"),
         props: true,
@@ -36,6 +45,9 @@ const routes = [
       {
         path: "/product",
         name: "Product",
+        meta: {
+          role: ["admin"],
+        },
         component: () =>
           import(
             /* webpackChunkName: "product" */ "@/views/product/list/Product.vue"
@@ -45,6 +57,9 @@ const routes = [
       {
         path: "product/createProduct",
         name: "CreateProduct",
+        meta: {
+          role: ["admin"],
+        },
         component: () =>
           import(
             /* webpackChunkName: "createProduct" */ "@/views/product/form/Create.vue"
@@ -52,6 +67,9 @@ const routes = [
       },
       {
         path: "product/:id/edit",
+        meta: {
+          role: ["admin"],
+        },
         name: "EditProduct",
         component: () =>
           import(
@@ -86,15 +104,13 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  let isAuth = localStorage.getItem("auth");
   if (to.name !== "Login" && !isAuth) {
     sessionStorage.setItem("redirectPath", to.path);
     next({ name: "Login" });
   } else next();
 
-  if(isAuth && to.path =='/login'){
-    next(from.path)
+  if (isAuth && to.path == "/login") {
+    next(from.path);
   }
 });
-
 export default router;
