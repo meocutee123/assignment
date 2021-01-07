@@ -90,7 +90,6 @@ export default {
           sessionStorage.removeItem("redirectPath");
         } else {
           this.warn = "User name or password is incorrect!";
-          console.log(this.warn);
         }
       }
     },

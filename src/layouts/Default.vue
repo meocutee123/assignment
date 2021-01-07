@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-import Nav from '@/components/common/Nav'
+import Nav from '@/components/common/Nav.vue'
 import User from '@/components/common/Header'
 export default {
     components:{

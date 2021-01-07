@@ -5,6 +5,7 @@
     </div>
     <div class="nav-menu" v-for="(nav, index) in navLayout" :key="index">
       <b-button
+        v-if="nav.role.includes(userRole)"
         block
         v-b-toggle="`${index}`"
         variant="none"
@@ -15,11 +16,13 @@
       </b-button>
       <b-collapse :id="`${index}`">
         <ul>
-          <li v-for="(attr, index) in nav.attrs" :key="index">
-            <router-link :to="{ name: attr.linkTo }">{{
-              attr.linkTittle
-            }}</router-link>
-          </li>
+          <template v-for="(attr, index) in nav.attrs">
+            <li v-if="attr.role.includes(userRole)" :key="index">
+              <router-link :to="{ name: attr.linkTo }">{{
+                attr.linkTittle
+              }}</router-link>
+            </li>
+          </template>
         </ul>
       </b-collapse>
     </div>
@@ -34,51 +37,20 @@ export default {
   data() {
     return {
       navLayout: navLayout,
-      test: () =>{
-        let foo = {...navLayout}
-        return foo
-      }
+      userRole: ''
     };
   },
   mounted() {
     if (this.isAuth) {
-      var filters = {
-        role: this.isAuth.role,
-      };
-
-      for (var i = 0; i < this.navLayout.length; i++) {
-        this.navLayout[i].attrs = this.navLayout[i].attrs.filter(function(
-          item
-        ) {
-          for (var key in filters) {
-            if (item[key] === undefined) {
-              return false;
-            }
-            if (!item[key].includes(filters[key])) {
-              return false;
-            }
-          }
-          return true;
-        });
-      }
-
-      this.navLayout = this.navLayout.filter(function(item) {
-        for (var key in filters) {
-          if (item[key] === undefined) {
-            return false;
-          }
-          if (!item[key].includes(filters[key])) {
-            return false;
-          }
-        }
-        return true;
-      });
+      this.userRole = this.isAuth.role;
+      
     }
   },
-  destroyed() {
-
+  methods: {
   },
-  methods: {},
+  destroyed() {
+    
+  },
   computed: {
     ...mapState(["products"]),
   },
@@ -129,5 +101,10 @@ nav {
 a {
   text-decoration: none;
   color: white;
+}
+@media screen and (max-width: 768px) {
+  nav {
+    display: none;
+  }
 }
 </style>
