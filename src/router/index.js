@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 // import authRouter from './checkAuth.js'
-let isAuth = localStorage.getItem("auth");
+
 Vue.use(VueRouter);
 const routes = [
   {
@@ -25,7 +25,7 @@ const routes = [
         path: "user/create",
         name: "Create",
         meta: {
-          role: ["admin"],
+          role: ["admin", 'user'],
         },
         component: () =>
           import(
@@ -35,9 +35,6 @@ const routes = [
       {
         path: "user/:id/edit",
         name: "Edit",
-        meta: {
-          role: ["user"],
-        },
         component: () =>
           import(/* webpackChunkName: "edit" */ "@/views/user/form/Edit.vue"),
         props: true,
@@ -104,6 +101,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  let isAuth = localStorage.getItem("auth");
   if (to.name !== "Login" && !isAuth) {
     sessionStorage.setItem("redirectPath", to.path);
     next({ name: "Login" });
@@ -113,4 +111,5 @@ router.beforeEach((to, from, next) => {
     next(from.path);
   }
 });
+
 export default router;
