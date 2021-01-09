@@ -99,7 +99,8 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
-
+// let a = routes.map(x=>('meta' in x))
+// console.log(a);
 router.beforeEach((to, from, next) => {
   let isAuth = localStorage.getItem("auth");
   if (to.name !== "Login" && !isAuth) {
