@@ -1,106 +1,37 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-
-// import authRouter from './checkAuth.js'
-
+import auth from "./auth/auth.js";
 Vue.use(VueRouter);
-const routes = [
-  {
-    path: "/",
-    component: () =>
-      import(/* webpackChunkName: "listUser" */ "../views/Home.vue"),
-    props: true,
-    children: [
-      {
-        path: "",
-        name: "Home",
-        meta: {
-          role: ["admin"],
-        },
-        component: () =>
-          import(/* webpackChunkName: "table" */ "@/views/user/list/User.vue"),
-        props: true,
-      },
-      {
-        path: "user/create",
-        name: "Create",
-        meta: {
-          role: ["admin", 'user'],
-        },
-        component: () =>
-          import(
-            /* webpackChunkName: "create" */ "@/views/user/form/Create.vue"
-          ),
-      },
-      {
-        path: "user/:id/edit",
-        name: "Edit",
-        component: () =>
-          import(/* webpackChunkName: "edit" */ "@/views/user/form/Edit.vue"),
-        props: true,
-      },
-      {
-        path: "/product",
-        name: "Product",
-        meta: {
-          role: ["admin"],
-        },
-        component: () =>
-          import(
-            /* webpackChunkName: "product" */ "@/views/product/list/Product.vue"
-          ),
-        props: true,
-      },
-      {
-        path: "product/createProduct",
-        name: "CreateProduct",
-        meta: {
-          role: ["admin"],
-        },
-        component: () =>
-          import(
-            /* webpackChunkName: "createProduct" */ "@/views/product/form/Create.vue"
-          ),
-      },
-      {
-        path: "product/:id/edit",
-        meta: {
-          role: ["admin"],
-        },
-        name: "EditProduct",
-        component: () =>
-          import(
-            /* webpackChunkName: "editProduct" */ "@/views/product/form/Edit.vue"
-          ),
-        props: true,
-      },
-    ],
-  },
-  {
-    path: "/login",
-    name: "Login",
-    meta: {
-      layout: "blank",
-    },
-    component: () =>
-      import(/* webpackChunkName: "login" */ "@/views/Login.vue"),
-  },
-  {
-    path: "/:catchAll(.*)",
-    name: "notFound",
-    meta: { layout: "blank" },
-    component: () =>
-      import(/* webpackChunkName: "notFound" */ "@/views/NotFound"),
-  },
-];
+
+let isAuth = JSON.parse(localStorage.getItem("auth"));
+const routes = [];
+
+if (isAuth) {
+  switch (isAuth.role) {
+    case "admin":
+      for (var i = 0; i < auth.admin.length; i++) {
+        routes.push(auth.admin[i]);
+      }
+      break;
+    case "user":
+      for (var j = 0; j < auth.user.length; j++) {
+        routes.push(auth.user[j]);
+      }
+      break;
+  }
+}
+
+if (!isAuth) {
+  for (var d = 0; d < auth.routesDefault.length; d++) {
+    routes.push(auth.routesDefault[d]);
+  }
+}
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
 });
-// let a = routes.map(x=>('meta' in x))
-// console.log(a);
 router.beforeEach((to, from, next) => {
   let isAuth = localStorage.getItem("auth");
   if (to.name !== "Login" && !isAuth) {

@@ -20,10 +20,6 @@
           @click="Remove(data.value)"
           style="font-weight: bold; color: red;"
         ></i>
-        <i :class="{isAuth : 'disabled'}"
-          class="fas fa-bomb ml-3"
-          style="font-weight: bold;"
-        ></i>
       </template>
     </Table>
   </div>
