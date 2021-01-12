@@ -22,7 +22,7 @@ export default {
       buttonGroup: [
         {
           type: "submit",
-          class: "mr-3",
+          class: "mr-3 btn-41b883",
           variant: "success",
           label: "Submit",
           // function: () => {
@@ -30,9 +30,9 @@ export default {
           // },
         },
         {
-          class: "mr-3",
           variant: "success",
           label: "Cancel",
+          class: 'btn-41b883',
           to: "/",
         },
       ],

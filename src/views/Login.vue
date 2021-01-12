@@ -11,10 +11,10 @@
         <span class="text-danger font-weight-bold">
           {{ warn }}
         </span>
-        <b-form-group label="Tên đăng nhập">
+        <b-form-group label="Username">
           <b-form-input
             id="userName"
-            placeholder="Nhập đăng nhập"
+            placeholder="Enter username"
             autocomplete="on"
             v-model.trim="$v.userName.$model"
             :class="{
@@ -29,9 +29,9 @@
             Last name cannot be blank!
           </span>
         </b-form-group>
-        <b-form-group label="Mật khẩu">
+        <b-form-group label="Password">
           <b-form-input
-            placeholder="Nhập mật khẩu"
+            placeholder="Enter password"
             v-model.trim="$v.password.$model"
             autocomplete="on"
             :class="{
@@ -47,7 +47,7 @@
           </span>
         </b-form-group>
         <b-form-group>
-          <b-button type="submit" block variant="success">Đăng nhập</b-button>
+          <b-button type="submit" block class="btn-41b883">Login</b-button>
         </b-form-group>
       </b-card>
     </form>
@@ -120,5 +120,9 @@ form {
       margin: 0 auto;
     }
   }
+}
+.btn-41b883{
+  background-color: #41b883;
+  border: none;
 }
 </style>

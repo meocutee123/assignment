@@ -30,7 +30,7 @@ export default {
   height: 100vh;
   label, legend {
     font-weight: bold;
-    color: #42b983;
+    color: #41b883;
   }
   a,
   a:hover {
@@ -40,5 +40,8 @@ export default {
 
 #nav {
   padding: 30px;
+}
+.btn-41b883{
+  background-color: #41b983;
 }
 </style>

@@ -3,7 +3,7 @@
     <div class="header">
       <h3>{{ title.name }}</h3>
       <router-link v-if="isAuth.role == 'admin'" :to="{ name: linkTo }">
-        <b-button variant="success" size="sm">{{
+        <b-button :class="classes" size="sm">{{
           title.button
         }}</b-button></router-link
       >
@@ -80,6 +80,7 @@ export default {
   props: {
     title: { type: Object, required: true },
     linkTo: { type: String, required: true },
+    classes: { type: String, required: true },
     items: { type: Array, required: true },
     fields: { type: Array, required: true },
     perPage: { type: Number, required: true },
@@ -128,6 +129,10 @@ export default {
   .header {
     display: flex;
     justify-content: space-between;
+  }
+  .btn-41b883 {
+    background-color: #41b883;
+    border: none;
   }
 }
 </style>

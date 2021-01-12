@@ -63,7 +63,7 @@ button:focus {
 nav {
   width: 25vw;
   height: 100vh;
-  background-color: #2bb642;
+  background-color: #41b883;
   padding: 10px;
   color: white;
   position: fixed;

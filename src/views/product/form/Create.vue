@@ -22,12 +22,12 @@ export default {
       buttonGroup: [
         {
           type: "submit",
-          class: "mr-3",
+          class: "mr-3 btn-41b883",
           variant: "success",
           label: "Submit",
         },
         {
-          class: "mr-3",
+          class: "btn-41b883",
           variant: "success",
           label: "Cancel",
           to: "/product",

@@ -23,12 +23,12 @@ export default {
       buttonGroup: [
         {
           type: "submit",
-          class: "mr-3",
+          class: "mr-3 btn-41b883",
           variant: "success",
           label: "Submit",
         },
         {
-          class: "mr-3",
+          class: "btn-41b883",
           variant: "success",
           label: "Cancel",
           to: "/",
@@ -51,18 +51,6 @@ export default {
     },
   },
   mounted() {
-    // value: {
-    //   id: '',
-    //   asdas : {
-    //     idd: ''
-    //   }
-    // }
-    // onchange(value){
-    //   const { id, asdas : { idd } = {}  }=value;
-
-    // }
-    // a ? b : c
-
     const { name, ...rest } = JSON.parse(JSON.stringify(this.currentUser));
     let newCurrentUser = {
       ...rest,

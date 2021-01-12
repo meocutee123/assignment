@@ -4,6 +4,7 @@
       :title="title"
       :linkTo="linkTo"
       :items="getAllUsers.items"
+      :classes="classes"
       :fields="fields"
       :perPage="perPage"
       :pageOptions="pageOptions"
@@ -35,6 +36,7 @@ export default {
         button: "Tạo người dùng",
       },
       linkTo: "Create",
+      classes: "btn-41b883",
       fields: [
         {
           // A column that needs custom formatting,

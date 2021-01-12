@@ -3,6 +3,7 @@
     <Table
       :title="title"
       :linkTo="linkTo"
+      :classes="classes"
       :items="getAllProducts.items"
       :fields="fields"
       :perPage="perPage"
@@ -34,6 +35,7 @@ export default {
         button: "Tạo sản phẩm",
       },
       linkTo: "CreateProduct",
+      classes: 'btn-41b883',
       fields: [
         {
           // A column that needs custom formatting,
