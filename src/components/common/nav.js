@@ -5,12 +5,12 @@ const navLayout = [
     role: ['admin', 'user'],
     attrs: [
       {
-        linkTo: "Home",
+        linkTo: "User",
         linkTittle: "Users",
         role: ["admin"],
       },
       {
-        linkTo: "Product",
+        linkTo: "Home",
         linkTittle: "Products",
         role: ['user', 'admin']
       },

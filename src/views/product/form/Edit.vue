@@ -31,7 +31,7 @@ export default {
           class: "btn-41b883",
           variant: "success",
           label: "Cancel",
-          to: "/product",
+          to: "/",
         },
       ],
       model: {
@@ -63,7 +63,7 @@ export default {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         this.$store.dispatch("UPDATE_PRODUCT", this.model);
-        this.$router.replace("/product");
+        this.$router.replace("/");
       }
     },
   },

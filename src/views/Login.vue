@@ -32,6 +32,7 @@
         <b-form-group label="Password">
           <b-form-input
             placeholder="Enter password"
+            type="password"
             v-model.trim="$v.password.$model"
             autocomplete="on"
             :class="{
@@ -48,53 +49,68 @@
         </b-form-group>
         <b-form-group>
           <b-button type="submit" block class="btn-41b883">Login</b-button>
+          <b-button v-if="test" type="submit" block class="btn-41b883"
+            >Login</b-button
+          >
         </b-form-group>
       </b-card>
     </form>
+    <div class="vld-parent">
+      <loading
+        :active.sync="isLoading"
+        :is-full-page="fullPage"
+        loader="dots"
+        color="#41b883"
+      ></loading>
+    </div>
   </div>
 </template>
 <script>
 import { required } from "vuelidate/lib/validators";
-
+// Import component
+import Loading from "vue-loading-overlay";
+// Import stylesheet
+import "vue-loading-overlay/dist/vue-loading.css";
 export default {
   data() {
     return {
       userName: "",
       password: "",
       warn: "",
+      test: null,
+      isLoading: false,
+      fullPage: true,
     };
   },
   methods: {
     submit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        if (this.userName == "admin" && this.password == "123") {
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              name: "Admin",
-              role: "admin",
-            })
-          );
-          this.$router.push(sessionStorage.getItem("redirectPath") || "/");
-          sessionStorage.removeItem("redirectPath");
-        } else if (this.userName == "user" && this.password == "123") {
-          localStorage.setItem(
-            "auth",
-            JSON.stringify({
-              name: "User",
-              role: "user",
-            })
-          );
-          this.$router.push(sessionStorage.getItem("redirectPath") || "/");
-          sessionStorage.removeItem("redirectPath");
+        this.$store.dispatch("login", this.user);
+         this.isLoading = true;
+        if (this.$store.state.logInStatus) {
+          setTimeout(() => {
+            this.$router.push(sessionStorage.getItem("redirectPath") || "/");
+            sessionStorage.removeItem("redirectPath");
+            this.isLoading = false;
+          }, 1500);
         } else {
-          this.warn = "User name or password is incorrect!";
+          setTimeout(() => {
+            this.isLoading = false
+          this.warn = "Username or password is incorrect";
+          }, 1000);
         }
       }
     },
   },
-  computed: {},
+  computed: {
+    user() {
+      return {
+        name: this.userName,
+        password: this.password,
+      };
+    },
+  },
   validations: {
     userName: {
       required,
@@ -102,6 +118,9 @@ export default {
     password: {
       required,
     },
+  },
+  components: {
+    Loading,
   },
 };
 </script>
@@ -121,7 +140,7 @@ form {
     }
   }
 }
-.btn-41b883{
+.btn-41b883 {
   background-color: #41b883;
   border: none;
 }

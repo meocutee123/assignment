@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <component :is="layout">
-      <router-view />
+     <transition name="fade" mode="out-in">
+        <router-view />
+     </transition>
     </component>
   </div>
 </template>
@@ -43,5 +45,14 @@ export default {
 }
 .btn-41b883{
   background-color: #41b983;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+  transform: translateX(1em);
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: all .3s ease;
 }
 </style>

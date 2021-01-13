@@ -75,6 +75,7 @@ const admin = [
     name: "Login",
     meta: {
       layout: "blank",
+      role: ["admin"],
     },
     component: () =>
       import(/* webpackChunkName: "login" */ "@/views/Login.vue"),
@@ -131,6 +132,7 @@ const routesDefault = [
     name: "Login",
     meta: {
       layout: "blank",
+      role: ["admin"],
     },
     component: () =>
       import(/* webpackChunkName: "login" */ "@/views/Login.vue"),

@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     logout() {
-      localStorage.removeItem("auth");
+      this.$store.dispatch('logout')
       this.$router.replace("/login");
     },
   },

@@ -25,15 +25,12 @@ export default {
           class: "mr-3 btn-41b883",
           variant: "success",
           label: "Submit",
-          // function: () => {
-          //   this.$router.push({ name: "Home" });
-          // },
         },
         {
           variant: "success",
           label: "Cancel",
           class: 'btn-41b883',
-          to: "/",
+          to: "/user",
         },
       ],
       model: {
@@ -68,7 +65,7 @@ export default {
 
       if (!this.$v.model.$anyError) {
         this.add(this.newUser);
-        this.$router.push({ name: "Home" });
+        this.$router.replace('/user');
         return;
       }
     },

@@ -31,7 +31,7 @@ export default {
           class: "btn-41b883",
           variant: "success",
           label: "Cancel",
-          to: "/",
+          to: "/User",
         },
       ],
       model: {},
@@ -64,7 +64,7 @@ export default {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         this.$store.dispatch("UPDATE_USER", this.newUser);
-        this.$router.replace("/");
+        this.$router.replace("/user");
       }
     },
   },
