@@ -29,8 +29,15 @@ export default {
         {
           variant: "success",
           label: "Cancel",
-          class: 'btn-41b883',
+          class: "btn-41b883",
           to: "/user",
+          function: () => {
+            this.$bvToast.toast("Toast body content", {
+              title: `Variant`,
+              variant: "success",
+              solid: true,
+            });
+          },
         },
       ],
       model: {
@@ -65,7 +72,7 @@ export default {
 
       if (!this.$v.model.$anyError) {
         this.add(this.newUser);
-        this.$router.replace('/user');
+        this.$router.replace("/user");
         return;
       }
     },
