@@ -1,6 +1,6 @@
 <template>
   <div id="create-product">
-    <form action="" @submit.prevent="update">
+    <form action="" @submit.prevent="update(edit)">
       <InputGroup :formLayout="formLayout" :model="model">
         <ButtonGroup :attrs="buttonGroup" />
       </InputGroup>
@@ -32,6 +32,9 @@ export default {
           variant: "success",
           label: "Cancel",
           to: "/",
+          function: () => {
+            this.cancel()
+          }
         },
       ],
       model: {
@@ -59,10 +62,11 @@ export default {
 
   methods: {
     ...mapActions(["LOAD_PRODUCT"]),
-    update() {
+    update(callback) {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         this.$store.dispatch("UPDATE_PRODUCT", this.model);
+        callback(this.model.productName)
         this.$router.replace("/");
       }
     },

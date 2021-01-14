@@ -1,6 +1,6 @@
 <template>
   <div id="create-user">
-    <form @submit.prevent="addNew">
+    <form @submit.prevent="addNew(create)">
       <InputGroup :formLayout="formLayout" :model="model">
         <ButtonGroup :attrs="buttonGroup" />
       </InputGroup>
@@ -32,11 +32,7 @@ export default {
           class: "btn-41b883",
           to: "/user",
           function: () => {
-            this.$bvToast.toast("Toast body content", {
-              title: `Variant`,
-              variant: "success",
-              solid: true,
-            });
+            return this.cancel();
           },
         },
       ],
@@ -67,13 +63,12 @@ export default {
       add: "ADD_USER",
     }),
 
-    addNew: function() {
+    addNew: function(callback) {
       this.$v.model.$touch();
-
       if (!this.$v.model.$anyError) {
         this.add(this.newUser);
+        callback(this.model.userName)
         this.$router.replace("/user");
-        return;
       }
     },
   },

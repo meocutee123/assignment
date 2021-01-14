@@ -1,21 +1,21 @@
 <template>
   <div id="app">
     <component :is="layout">
-     <transition name="fade" mode="out-in">
+      <transition name="fade" mode="out-in">
         <router-view />
-     </transition>
+      </transition>
     </component>
   </div>
 </template>
 <script>
-const defaultLayout = 'default'
+const defaultLayout = "default";
 export default {
   components: {},
-  computed:{
-    layout(){
-      return (this.$route.meta.layout || defaultLayout) + '-layout'
-    }
-  }
+  computed: {
+    layout() {
+      return (this.$route.meta.layout || defaultLayout) + "-layout";
+    },
+  },
 };
 </script>
 
@@ -30,7 +30,8 @@ export default {
   margin: 0;
   overflow: hidden;
   height: 100vh;
-  label, legend {
+  label,
+  legend {
     font-weight: bold;
     color: #41b883;
   }
@@ -43,16 +44,18 @@ export default {
 #nav {
   padding: 30px;
 }
-.btn-41b883{
+.btn-41b883 {
   background-color: #41b983;
 }
 
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
   transform: translateX(1em);
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: all .3s ease;
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.3s ease;
 }
 </style>

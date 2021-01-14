@@ -19,6 +19,27 @@ const mixins = {
 
       return str;
     },
+    cancel() {
+      this.$root.$bvToast.toast("Action canceled!", {
+        title: `Message`,
+        variant: "warning",
+        solid: true,
+      });
+    },
+    create(value){
+      this.$root.$bvToast.toast(`${value} has been added successfully!`, {
+        title: `Message`,
+        variant: "success",
+        solid: true,
+      });
+    },
+    edit(value){
+      this.$root.$bvToast.toast(`${value} has been edited successfully!`, {
+        title: `Message`,
+        variant: "success",
+        solid: true,
+      });
+    },
   },
   provide() {
     return {

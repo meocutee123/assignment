@@ -1,6 +1,6 @@
 <template>
   <div id="create-user">
-    <form action="" @submit.prevent="update">
+    <form action="" @submit.prevent="update(edit)">
       <InputGroup :formLayout="formLayout" :model="model">
         <ButtonGroup :attrs="buttonGroup" />
       </InputGroup>
@@ -32,6 +32,9 @@ export default {
           variant: "success",
           label: "Cancel",
           to: "/User",
+          function: () => {
+            return this.cancel()
+          }
         },
       ],
       model: {},
@@ -60,10 +63,11 @@ export default {
   },
   methods: {
     ...mapActions(["LOAD_USER"]),
-    update() {
+    update(callback) {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         this.$store.dispatch("UPDATE_USER", this.newUser);
+        callback(this.model.userName)
         this.$router.replace("/user");
       }
     },

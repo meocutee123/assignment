@@ -1,6 +1,6 @@
 <template>
   <div id="create-product">
-    <form @submit.prevent="addProduct">
+    <form @submit.prevent="addProduct(create)">
       <InputGroup :formLayout="formLayout" :model="model">
         <ButtonGroup :attrs="buttonGroup" />
       </InputGroup>
@@ -31,6 +31,9 @@ export default {
           variant: "success",
           label: "Cancel",
           to: "/",
+          function: () => {
+            this.cancel()
+          }
         },
       ],
       model: {
@@ -42,10 +45,11 @@ export default {
   },
   methods: {
     ...mapMutations(["ADD_PRODUCT"]),
-    addProduct: function() {
+    addProduct: function(callback) {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         this.ADD_PRODUCT(this.newProduct);
+        callback(this.model.productName)
         this.$router.replace("/");
       }
     },
