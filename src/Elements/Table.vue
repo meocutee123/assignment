@@ -105,7 +105,7 @@ export default {
     },
     autoRun() {
       this.fields.push({
-        label: "Thao tác",
+        label: "Action",
         key: "id",
       });
     },

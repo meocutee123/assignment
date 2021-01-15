@@ -40,6 +40,13 @@ const mixins = {
         solid: true,
       });
     },
+    onDelete(value){
+      this.$root.$bvToast.toast(`${value} has been deleted!`, {
+        title: `Message`,
+        variant: "danger",
+        solid: true,
+      });
+    },
   },
   provide() {
     return {

@@ -18,7 +18,7 @@
         </router-link>
         <i
           class="fas fa-trash-alt ml-3"
-          @click="Remove(data.value)"
+          @click="Remove(data.value, onDelete)"
           style="font-weight: bold; color: red;"
         ></i></template
     ></Table>
@@ -27,42 +27,44 @@
 <script>
 import Table from "@/elements/Table";
 import { mapGetters, mapActions } from "vuex";
+import mixins from "@/mixins/index.js";
 export default {
+  mixins: [mixins],
   data() {
     return {
       title: {
-        name: "Danh sách sản phẩm",
-        button: "Tạo sản phẩm",
+        name: "List products",
+        button: "Create",
       },
       linkTo: "CreateProduct",
-      classes: 'btn-41b883',
+      classes: "btn-41b883",
       fields: [
         {
           // A column that needs custom formatting,
           // calling formatter 'fullName' in this app
           key: "productName",
-          label: "Tên sản phẩm",
+          label: "Name",
         },
         {
-          label: "Ngày tạo",
+          label: "Created date",
           key: "createdDate",
         },
         {
-          label: "Ngày cập nhật gần đây",
+          label: "Updated date",
           key: "updatedDate",
         },
         {
-          label: "Giá",
+          label: "Price",
           key: "price",
         },
         {
-          label: "Trạng thái",
+          label: "Status",
           key: "status",
           formatter: (value, key, item) => {
             if (item.status) {
-              return "Hoạt động";
+              return "Active";
             }
-            return "Không hoạt động";
+            return "Inactive";
           },
         },
       ],
@@ -71,11 +73,14 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["REMOVE_PRODUCT"]),
-    Remove(id) {
-      var result = confirm("ARE YOU SURE ?")
-      if (result){
+    ...mapActions(["REMOVE_PRODUCT", "LOAD_PRODUCT"]),
+    Remove(id, callback) {
+      var result = confirm("ARE YOU SURE ?");
+      this.LOAD_PRODUCT(id);
+      var name = this.$store.state.product.currentProduct.productName;
+      if (result) {
         this.REMOVE_PRODUCT(id);
+        callback(name);
       }
     },
   },
