@@ -40,6 +40,13 @@ const mixins = {
         solid: true,
       });
     },
+    Exist(value){
+      this.$root.$bvToast.toast(`${value} already exist!`, {
+        title: `Message`,
+        variant: "danger",
+        solid: true,
+      });
+    },
     onDelete(value){
       this.$root.$bvToast.toast(`${value} has been deleted!`, {
         title: `Message`,

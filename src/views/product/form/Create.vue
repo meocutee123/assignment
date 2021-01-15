@@ -10,7 +10,7 @@
 <script>
 import InputGroup from "@/elements/InputGroup";
 import ButtonGroup from "@/elements/ButtonGroup";
-import { mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
 import Create from "./Create.js";
 import mixins from "@/mixins/index.js";
@@ -46,11 +46,23 @@ export default {
   methods: {
     ...mapMutations(["ADD_PRODUCT"]),
     addProduct: function(callback) {
+      console.log(this.search(this.model.productName, this.getAllProducts.items));
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        this.ADD_PRODUCT(this.newProduct);
+        if(!this.search(this.model.productName, this.getAllProducts.items)){
+          this.ADD_PRODUCT(this.newProduct);
         callback(this.model.productName)
         this.$router.replace("/");
+        }else{
+          this.Exist(this.model.productName)
+        }
+      }
+    },
+        search(nameKey, myArray) {
+      for (var i = 0; i < myArray.length; i++) {
+        if (myArray[i].productName === nameKey) {
+          return true;
+        }
       }
     },
   },
@@ -66,6 +78,7 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(['getAllProducts']),
     newProduct() {
       let newProduct = {
         id: this.getID,

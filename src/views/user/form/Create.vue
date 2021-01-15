@@ -11,7 +11,7 @@
 import InputGroup from "@/elements/InputGroup";
 import ButtonGroup from "@/elements/ButtonGroup";
 import Create from "./Create.js";
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
 import mixins from "@/mixins/index.js";
 export default {
@@ -62,17 +62,28 @@ export default {
     ...mapMutations({
       add: "ADD_USER",
     }),
-
     addNew: function(callback) {
       this.$v.model.$touch();
       if (!this.$v.model.$anyError) {
-        this.add(this.newUser);
-        callback(this.model.userName)
-        this.$router.replace("/user");
+        if (!this.search(this.model.userName, this.getAllUsers.items)) {
+          this.add(this.newUser);
+          callback(this.model.userName);
+          this.$router.replace("/user");
+        } else {
+          this.Exist(this.model.userName)
+        }
+      }
+    },
+        search(nameKey, myArray) {
+      for (var i = 0; i < myArray.length; i++) {
+        if (myArray[i].userName === nameKey) {
+          return true;
+        }
       }
     },
   },
   computed: {
+    ...mapGetters(["getAllUsers"]),
     newUser() {
       let newUser = {
         id: this.getID,
