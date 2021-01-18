@@ -27,6 +27,7 @@ const mixins = {
       });
     },
     create(value){
+      this.buttonGroup[0].disabled = false 
       this.$root.$bvToast.toast(`${value} has been added successfully!`, {
         title: `Message`,
         variant: "success",
@@ -34,6 +35,7 @@ const mixins = {
       });
     },
     edit(value){
+      this.buttonGroup[0].disabled = false 
       this.$root.$bvToast.toast(`${value} has been edited successfully!`, {
         title: `Message`,
         variant: "success",

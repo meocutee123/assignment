@@ -1,6 +1,14 @@
 <template>
   <div id="create-user">
     <form @submit.prevent="addNew(create)">
+      <div class="float">
+        <fulfilling-bouncing-circle-spinner
+          v-if="show"
+          :animation-duration="4000"
+          :size="30"
+          color="#41b883"
+        />
+      </div>
       <InputGroup :formLayout="formLayout" :model="model">
         <ButtonGroup :attrs="buttonGroup" />
       </InputGroup>
@@ -14,17 +22,20 @@ import Create from "./Create.js";
 import { mapMutations, mapGetters } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
 import mixins from "@/mixins/index.js";
+import { FulfillingBouncingCircleSpinner } from "epic-spinners";
 export default {
   mixins: [mixins],
   data() {
     return {
       formLayout: Create.formLayout,
+      show: false,
       buttonGroup: [
         {
           type: "submit",
           class: "mr-3 btn-41b883",
           variant: "success",
           label: "Submit",
+          disabled: false
         },
         {
           variant: "success",
@@ -66,15 +77,21 @@ export default {
       this.$v.model.$touch();
       if (!this.$v.model.$anyError) {
         if (!this.search(this.model.userName, this.getAllUsers.items)) {
-          this.add(this.newUser);
-          callback(this.model.userName);
-          this.$router.replace("/user");
+          this.show = true;
+          this.buttonGroup[0].disabled = true 
+          setTimeout(() => {
+            this.add(this.newUser);
+            callback(this.model.userName);
+            this.$router.replace("/user");
+          }, 1000);
         } else {
-          this.Exist(this.model.userName)
+          this.Exist(this.model.userName);
+                this.show = false;
+          this.buttonGroup[0].disabled = false 
         }
       }
     },
-        search(nameKey, myArray) {
+    search(nameKey, myArray) {
       for (var i = 0; i < myArray.length; i++) {
         if (myArray[i].userName === nameKey) {
           return true;
@@ -98,6 +115,7 @@ export default {
   components: {
     InputGroup,
     ButtonGroup,
+    FulfillingBouncingCircleSpinner,
   },
 };
 </script>
@@ -106,5 +124,10 @@ form {
   padding: 20px;
   margin: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  .float {
+    position: absolute;
+    width: 30px;
+    right: 50px;
+  }
 }
 </style>

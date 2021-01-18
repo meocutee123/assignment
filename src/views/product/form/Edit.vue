@@ -1,6 +1,14 @@
 <template>
   <div id="create-product">
     <form action="" @submit.prevent="update(edit)">
+      <div class="float">
+        <fulfilling-bouncing-circle-spinner
+          v-if="show"
+          :animation-duration="4000"
+          :size="30"
+          color="#41b883"
+        />
+      </div>
       <InputGroup :formLayout="formLayout" :model="model">
         <ButtonGroup :attrs="buttonGroup" />
       </InputGroup>
@@ -14,18 +22,21 @@ import mixins from "@/mixins/index.js";
 import Edit from "./Edit.js";
 import { mapActions } from "vuex";
 import { required } from "vuelidate/lib/validators";
+import { FulfillingBouncingCircleSpinner } from "epic-spinners";
 export default {
   props: ["id"],
   mixins: [mixins],
   data() {
     return {
       formLayout: Edit.formLayout,
+      show: false,
       buttonGroup: [
         {
           type: "submit",
           class: "mr-3 btn-41b883",
           variant: "success",
           label: "Submit",
+          disabled: false,
         },
         {
           class: "btn-41b883",
@@ -33,8 +44,8 @@ export default {
           label: "Cancel",
           to: "/",
           function: () => {
-            this.cancel()
-          }
+            this.cancel();
+          },
         },
       ],
       model: {
@@ -65,9 +76,16 @@ export default {
     update(callback) {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        this.$store.dispatch("UPDATE_PRODUCT", this.model);
-        callback(this.model.productName)
-        this.$router.replace("/");
+        this.show = true;
+        this.buttonGroup[0].disabled = true;
+        setTimeout(() => {
+          this.$store.dispatch("UPDATE_PRODUCT", this.model);
+          callback(this.model.productName);
+          this.$router.replace("/");
+        }, 1000);
+      } else {
+        this.show = false;
+        this.buttonGroup[0].disabled = false;
       }
     },
   },
@@ -80,6 +98,7 @@ export default {
   components: {
     InputGroup,
     ButtonGroup,
+    FulfillingBouncingCircleSpinner,
   },
 };
 </script>
@@ -88,5 +107,11 @@ form {
   padding: 20px;
   margin: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  .float {
+    position: absolute;
+    width: 30px;
+    right: 50px;
+    top: 100px;
+  }
 }
 </style>
