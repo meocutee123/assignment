@@ -56,6 +56,17 @@ const mixins = {
         solid: true,
       });
     },
+    animation() {
+      this.show = !this.show;
+      this.buttonGroup[0].disabled = !this.buttonGroup[0].disabled;
+    },
+    search(nameKey, myArray, key) {
+      for (var i = 0; i < myArray.length; i++) {
+        if (myArray[i][`${key}`] === nameKey) {
+          return true;
+        }
+      }
+    },
   },
   provide() {
     return {

@@ -58,27 +58,22 @@ export default {
     ...mapMutations(["ADD_PRODUCT"]),
     addProduct: function(callback) {
       this.$v.$touch();
+
+      var name = this.model.productName;
+      var array = this.getAllProducts.items;
+
       if (!this.$v.$invalid) {
-        this.show = true;
-        this.buttonGroup[0].disabled = true;
-        if (!this.search(this.model.productName, this.getAllProducts.items)) {
-          setTimeout(() => {
+        this.animation();
+        setTimeout(() => {
+          if (!this.search(name, array, "productName")) {
             this.ADD_PRODUCT(this.newProduct);
-            callback(this.model.productName);
+            callback(name);
             this.$router.replace("/");
-          }, 1000);
-        } else {
-          this.Exist(this.model.productName);
-          this.show = false;
-          this.buttonGroup[0].disabled = false;
-        }
-      }
-    },
-    search(nameKey, myArray) {
-      for (var i = 0; i < myArray.length; i++) {
-        if (myArray[i].productName === nameKey) {
-          return true;
-        }
+          } else {
+            this.Exist(name);
+            this.animation();
+          }
+        }, 1000);
       }
     },
   },
@@ -123,7 +118,7 @@ form {
     position: absolute;
     width: 30px;
     right: 50px;
-    top: 100px
+    top: 100px;
   }
 }
 </style>

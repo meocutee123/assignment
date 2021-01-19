@@ -6,9 +6,9 @@
       </template>
       <template #avatar></template>
       <router-link to="/profile">
-        <b-dropdown-item>Hồ sơ</b-dropdown-item>
+        <b-dropdown-item>Profile</b-dropdown-item>
       </router-link>
-      <b-dropdown-item @click="logout">Thoát</b-dropdown-item>
+      <b-dropdown-item @click="logout">Logout</b-dropdown-item>
     </b-dropdown>
   </div>
 </template>

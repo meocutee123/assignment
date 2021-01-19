@@ -75,17 +75,17 @@ export default {
     ...mapActions(["LOAD_PRODUCT"]),
     update(callback) {
       this.$v.$touch();
+
+      var name = this.model.productName;
+      this.animation();
       if (!this.$v.$invalid) {
-        this.show = true;
-        this.buttonGroup[0].disabled = true;
         setTimeout(() => {
           this.$store.dispatch("UPDATE_PRODUCT", this.model);
-          callback(this.model.productName);
+          callback(name);
           this.$router.replace("/");
         }, 1000);
       } else {
-        this.show = false;
-        this.buttonGroup[0].disabled = false;
+        this.animation();
       }
     },
   },

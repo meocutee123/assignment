@@ -42,7 +42,7 @@ const routes = [
     name: "User",
     meta: {
       requiresAuth: true,
-      role: ["user", "admin"],
+      role: ["admin"],
     },
     component: () =>
       import(/* webpackChunkName: "product" */ "@/views/user/list/User.vue"),

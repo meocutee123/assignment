@@ -26,15 +26,15 @@
             <b-form-input
               id="filter-input"
               v-model="filter"
-              type="search"
-              placeholder="Tìm kiếm"
+              type="text"
+              placeholder="Search"
             ></b-form-input>
             <b-button
               size="sm"
               variant="success"
               :disabled="!filter"
               @click="filter = ''"
-              >Xóa</b-button
+              >Clear</b-button
             >
           </b-input-group>
         </b-form-group>

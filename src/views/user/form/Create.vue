@@ -35,7 +35,7 @@ export default {
           class: "mr-3 btn-41b883",
           variant: "success",
           label: "Submit",
-          disabled: false
+          disabled: false,
         },
         {
           variant: "success",
@@ -75,27 +75,22 @@ export default {
     }),
     addNew: function(callback) {
       this.$v.model.$touch();
+
+      var name = this.model.userName;
+      var array = this.getAllUsers.items;
+
       if (!this.$v.model.$anyError) {
-        if (!this.search(this.model.userName, this.getAllUsers.items)) {
-          this.show = true;
-          this.buttonGroup[0].disabled = true 
-          setTimeout(() => {
+        this.animation();
+        setTimeout(() => {
+          if (!this.search(name, array, 'userName')) {
             this.add(this.newUser);
-            callback(this.model.userName);
+            callback(name);
             this.$router.replace("/user");
-          }, 1000);
-        } else {
-          this.Exist(this.model.userName);
-                this.show = false;
-          this.buttonGroup[0].disabled = false 
-        }
-      }
-    },
-    search(nameKey, myArray) {
-      for (var i = 0; i < myArray.length; i++) {
-        if (myArray[i].userName === nameKey) {
-          return true;
-        }
+          } else {
+            this.Exist(name);
+            this.animation();
+          }
+        }, 1000);
       }
     },
   },

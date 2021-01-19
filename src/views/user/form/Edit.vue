@@ -76,17 +76,15 @@ export default {
     ...mapActions(["LOAD_USER"]),
     update(callback) {
       this.$v.$touch();
+      this.animation();
       if (!this.$v.$invalid) {
-        this.show = true;
-        this.buttonGroup[0].disabled = true;
         setTimeout(() => {
           this.$store.dispatch("UPDATE_USER", this.newUser);
           callback(this.model.userName);
           this.$router.replace("/user");
         }, 1000);
-      }else{
-        this.show = false;
-        this.buttonGroup[0].disabled = false;
+      } else {
+        this.animation();
       }
     },
   },
