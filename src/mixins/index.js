@@ -1,4 +1,9 @@
 const mixins = {
+  data() {
+    return {
+      disabledBtn: null
+    }
+  },
   methods: {
     getFormattedDate() {
       var date = new Date();
@@ -27,7 +32,7 @@ const mixins = {
       });
     },
     create(value){
-      this.buttonGroup[0].disabled = false 
+      this.disabledBtn.disabled = false 
       this.$root.$bvToast.toast(`${value} has been added successfully!`, {
         title: `Message`,
         variant: "success",
@@ -35,7 +40,7 @@ const mixins = {
       });
     },
     edit(value){
-      this.buttonGroup[0].disabled = false 
+      this.disabledBtn.disabled = false 
       this.$root.$bvToast.toast(`${value} has been edited successfully!`, {
         title: `Message`,
         variant: "success",
@@ -58,7 +63,7 @@ const mixins = {
     },
     animation() {
       this.show = !this.show;
-      this.buttonGroup[0].disabled = !this.buttonGroup[0].disabled;
+      this.disabledBtn.disabled = !this.disabledBtn.disabled;
     },
     search(nameKey, myArray, key) {
       for (var i = 0; i < myArray.length; i++) {

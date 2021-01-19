@@ -30,6 +30,7 @@ export default {
     return {
       formLayout: Edit.formLayout,
       show: false,
+      disabledBtn: null,
       buttonGroup: [
         {
           type: "submit",
@@ -107,6 +108,9 @@ export default {
     ButtonGroup,
     FulfillingBouncingCircleSpinner,
   },
+    created(){
+    this.disabledBtn = this.buttonGroup[0];
+  }
 };
 </script>
 <style lang="scss" scoped>

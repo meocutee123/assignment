@@ -52,6 +52,7 @@ export default {
         price: null,
         status: false,
       },
+      disabledBtn: null,
     };
   },
   methods: {
@@ -101,6 +102,9 @@ export default {
       };
       return newProduct;
     },
+  },
+  created() {
+    this.disabledBtn = this.buttonGroup[0];
   },
   components: {
     InputGroup,

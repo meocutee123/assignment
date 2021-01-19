@@ -30,6 +30,7 @@ export default {
     return {
       formLayout: Edit.formLayout,
       show: false,
+            disabledBtn: null,
       buttonGroup: [
         {
           type: "submit",
@@ -88,6 +89,9 @@ export default {
         this.animation();
       }
     },
+  },
+      created(){
+    this.disabledBtn = this.buttonGroup[0];
   },
   computed: {
     currentProduct() {

@@ -53,6 +53,7 @@ export default {
         last: null,
         status: false,
       },
+      disabledBtn: null
     };
   },
   validations: {
@@ -112,6 +113,9 @@ export default {
     ButtonGroup,
     FulfillingBouncingCircleSpinner,
   },
+  created(){
+    this.disabledBtn = this.buttonGroup[0];
+  }
 };
 </script>
 <style lang="scss" scoped>
