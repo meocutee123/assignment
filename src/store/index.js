@@ -21,27 +21,30 @@ export default new Vuex.Store({
     ],
     logInStatus: false,
   },
-  actions: {
+  mutations: {
     login: (state, user) => {
-      let newUser = state.state.whoCanLogIn.filter(function(item) {
-        for (var key in user) {
-          if (item[key] == undefined || item[key] != user[key]) {
-            return false;
-          }
-          return true;
-        }
+      let newUser = state.whoCanLogIn.filter(function(item) {
+        return user.name == item.name && user.password == item.password
       });
       if (newUser.length == 1) {
-        state.state.logInStatus = true;
+        state.logInStatus = true;
         delete newUser[0].password
         let auth = JSON.stringify(newUser[0]);
         localStorage.setItem("auth", auth);
       }
     },
     logout: (state) => {
-      state.state.logInStatus = false;
+      state.logInStatus = false;
       localStorage.removeItem("auth");
     },
+  },
+  actions: {
+    login(context, user){
+      context.commit("login", user)
+    },
+    logout(context){
+      context.commit("logout")
+    }
   },
   modules: {
     user,
