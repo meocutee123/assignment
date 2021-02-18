@@ -1,5 +1,5 @@
 <template>
-  <b-row id='form'>
+  <b-row id="form">
     <b-col
       v-for="(layout, index) in formLayout"
       :key="index"
@@ -52,5 +52,4 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

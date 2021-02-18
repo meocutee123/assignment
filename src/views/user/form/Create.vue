@@ -19,7 +19,7 @@
 import InputGroup from "@/elements/InputGroup";
 import ButtonGroup from "@/elements/ButtonGroup";
 import Create from "./Create.js";
-import { mapMutations, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import { required, minLength } from "vuelidate/lib/validators";
 import mixins from "@/mixins/index.js";
 import { FulfillingBouncingCircleSpinner } from "epic-spinners";
@@ -53,7 +53,7 @@ export default {
         last: null,
         status: false,
       },
-      disabledBtn: null
+      disabledBtn: null,
     };
   },
   validations: {
@@ -71,41 +71,26 @@ export default {
     },
   },
   methods: {
-    ...mapMutations({
-      add: "ADD_USER",
-    }),
-    addNew: function(callback) {
+    async addNew() {
       this.$v.model.$touch();
 
-      var name = this.model.userName;
-      var array = this.getAllUsers.items;
-
       if (!this.$v.model.$anyError) {
-        this.animation();
-        setTimeout(() => {
-          if (!this.search(name, array, 'userName')) {
-            this.add(this.newUser);
-            callback(name);
-            this.$router.replace("/user");
-          } else {
-            this.Exist(name);
-            this.animation();
-          }
-        }, 1000);
+        this.show = true;
+        await this.$store.dispatch("ADD_USER", this.newUser);
+        this.show = false;
+        this.$router.replace("/user");
       }
     },
   },
   computed: {
     ...mapGetters(["getAllUsers"]),
     newUser() {
-      let newUser = {
-        id: this.getID,
+      return {
         userName: this.model.userName,
         name: { first: this.model.first, last: this.model.last },
         createdDate: this.getFormattedDate(),
         status: this.model.status,
       };
-      return newUser;
     },
   },
   components: {
@@ -113,9 +98,9 @@ export default {
     ButtonGroup,
     FulfillingBouncingCircleSpinner,
   },
-  created(){
+  created() {
     this.disabledBtn = this.buttonGroup[0];
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

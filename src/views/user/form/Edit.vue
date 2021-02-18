@@ -1,6 +1,6 @@
 <template>
   <div id="create-user">
-    <form action="" @submit.prevent="update(edit)">
+    <form action="" @submit.prevent="update()">
       <div class="float">
         <fulfilling-bouncing-circle-spinner
           v-if="show"
@@ -19,8 +19,7 @@
 import InputGroup from "@/elements/InputGroup.vue";
 import ButtonGroup from "@/elements/ButtonGroup";
 import mixins from "@/mixins/index.js";
-import Edit from "./Edit.js";
-import { mapActions } from "vuex";
+import { formLayout } from "./Edit.js";
 import { required } from "vuelidate/lib/validators";
 import { FulfillingBouncingCircleSpinner } from "epic-spinners";
 export default {
@@ -28,7 +27,7 @@ export default {
   mixins: [mixins],
   data() {
     return {
-      formLayout: Edit.formLayout,
+      formLayout: formLayout,
       show: false,
       disabledBtn: null,
       buttonGroup: [
@@ -44,9 +43,6 @@ export default {
           variant: "success",
           label: "Cancel",
           to: "/User",
-          function: () => {
-            return this.cancel();
-          },
         },
       ],
       model: {},
@@ -65,42 +61,50 @@ export default {
       },
     },
   },
-  mounted() {
-    const { name, ...rest } = JSON.parse(JSON.stringify(this.currentUser));
-    let newCurrentUser = {
-      ...rest,
-      ...name,
-    };
-    this.model = Object.assign({}, this.model, newCurrentUser);
+  async mounted() {
+    this.show = true
+    await this.$store.dispatch("LOAD_USER", this.id);
+    this.show = false
   },
   methods: {
-    ...mapActions(["LOAD_USER"]),
-    update(callback) {
+    loadCurrentUser() {
+      const { name, ...rest } = JSON.parse(JSON.stringify(this.currentUser));
+      let newCurrentUser = {
+        ...rest,
+        ...name,
+      };
+      this.model = Object.assign({}, this.model, newCurrentUser);
+    },
+    async update() {
       this.$v.$touch();
-      this.animation();
       if (!this.$v.$invalid) {
-        setTimeout(() => {
-          this.$store.dispatch("UPDATE_USER", this.newUser);
-          callback(this.model.userName);
+          this.show = true
+          await this.$store.dispatch("UPDATE_USER", this.newUser);
           this.$router.replace("/user");
-        }, 1000);
-      } else {
-        this.animation();
+          this.show = false
       }
     },
   },
   computed: {
-    currentUser() {
-      this.LOAD_USER(this.id);
-      return this.$store.state.user.currentUser;
-    },
     newUser() {
       let newUser = {
         id: this.id,
+        userName: this.model.userName,
+        createdDate: this.model.createdDate,
         name: { first: this.model.first, last: this.model.last },
         status: this.model.status,
       };
       return newUser;
+    },
+    currentUser() {
+      return this.$store.state.user.currentUser;
+    },
+  },
+  watch: {
+    currentUser: {
+      handler() {
+        this.loadCurrentUser();
+      },
     },
   },
   components: {
@@ -108,9 +112,9 @@ export default {
     ButtonGroup,
     FulfillingBouncingCircleSpinner,
   },
-    created(){
+  created() {
     this.disabledBtn = this.buttonGroup[0];
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

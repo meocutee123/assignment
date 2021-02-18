@@ -3,14 +3,15 @@
     <Table
       :title="title"
       :linkTo="linkTo"
-      :items="getAllUsers.items"
+      :items="users"
       :classes="classes"
       :fields="fields"
       :perPage="perPage"
       :pageOptions="pageOptions"
+      :tableStatus="tableStatus"
     >
       <template #cell(id)="data">
-        <router-link :to="{ name: 'Edit', params: { id: data.value } }">
+        <router-link v-if="data.value" :to="{ name: 'Edit', params: { id: data.value } }">
           <i
             class="fas fa-edit ml-3"
             style="font-weight: bold; color: #42b983;"
@@ -18,7 +19,7 @@
         </router-link>
         <i
           class="fas fa-trash-alt ml-3"
-          @click="Remove(data.value, onDelete)"
+          @click="Remove(data.value)"
           style="font-weight: bold; color: red;"
         ></i>
       </template>
@@ -27,8 +28,8 @@
 </template>
 <script>
 import Table from "@/elements/Table";
-import { mapGetters, mapActions } from "vuex";
 import mixins from "@/mixins/index.js";
+import { mapState } from 'vuex';
 export default {
   mixins: [mixins],
   data() {
@@ -69,17 +70,20 @@ export default {
       ],
       pageOptions: [20, 50, 100, { value: 1000, text: "Show all" }],
       perPage: 20,
+      tableStatus: true
     };
   },
+  async mounted() {
+    await this.$store.dispatch("GET_USER");
+    this.tableStatus = false
+  },
   methods: {
-    ...mapActions(["REMOVE_USER", "LOAD_USER"]),
-    Remove(id, callback) {
-      this.LOAD_USER(id);
-      var name = this.$store.state.user.currentUser.userName;
+    async Remove(id) {
       var result = confirm("ARE YOU SURE ?");
       if (result) {
-        this.REMOVE_USER(id);
-        callback(name);
+        this.tableStatus = true
+        await this.$store.dispatch('REMOVE_USER',id);
+        this.tableStatus = false
       }
     },
   },
@@ -87,7 +91,9 @@ export default {
     Table,
   },
   computed: {
-    ...mapGetters(["getAllUsers"]),
+    ...mapState({
+      users: state => state.user.users
+    })
   },
 };
 </script>

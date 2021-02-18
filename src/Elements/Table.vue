@@ -46,6 +46,7 @@
           striped
           :items="items"
           :fields="fields"
+          :busy="tableStatus"
           :current-page="currentPage"
           :per-page="perPageLocal"
           :filter="filter"
@@ -55,6 +56,12 @@
         >
           <template v-slot:cell(id)="data">
             <slot name="cell(id)" v-bind="data"> </slot>
+          </template>
+          <template #table-busy>
+            <div class="text-center text-danger my-2">
+              <b-spinner class="align-middle"></b-spinner>
+              <strong>Loading...</strong>
+            </div>
           </template>
         </b-table>
       </b-col>
@@ -85,6 +92,10 @@ export default {
     fields: { type: Array, required: true },
     perPage: { type: Number, required: true },
     pageOptions: { type: Array, required: true },
+    tableStatus: {
+      type: Boolean,
+      required: true,
+    },
   },
   data() {
     return {
